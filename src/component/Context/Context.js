@@ -23,7 +23,16 @@ const Context = ({ children }) => {
         return createUserWithEmailAndPassword(auth, email, password)
     }
 
- 
+    const loginInEmailPassword = (email, password) => {
+        setLoading(true)
+        return signInWithEmailAndPassword
+    }
+
+    const logOut = () => {
+        localStorage.removeItem('token')
+        return signOut(auth)
+    }
+
     const updateInfo =(name,image)=>{
         setLoading(true)
         return updateProfile(auth.currentUser ,{
