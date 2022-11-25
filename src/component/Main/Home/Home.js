@@ -78,7 +78,7 @@ const Home = () => {
                     slider
                 }
             </div> */}
-            <div className='grid grid-cols-1 md:grid-cols-2 lg'>
+            <div className='grid grid-cols-1 md:grid-cols-2 gap-3'>
                 {
                     mobiels?.map(mobile => <Mobiles key={mobile._id} mobile={mobile}></Mobiles>)
                 }

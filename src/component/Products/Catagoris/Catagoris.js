@@ -9,7 +9,7 @@ const Catagoris = () => {
     const {bandname}=useParams()
     const [catagoris,setCatagoris]=useState([])
 
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+ 
     const allCatagoriMobiel =()=>{
           catagoriMobiel(bandname)
           .then(result=>{
