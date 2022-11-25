@@ -1,20 +1,53 @@
 import React, { useContext } from 'react';
 import { FcGoogle, } from "react-icons/fc";
 import { FaGithubSquare } from "react-icons/fa";
-import { Link } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { AuthContex } from '../../Context/Context';
 import { ThreeCircles } from 'react-loader-spinner';
+import toast from 'react-hot-toast';
+import { useForm } from 'react-hook-form';
 
 
 const Login = () => {
 
-    const {user,googleLogin, loading, setLoading,loginInEmailPassword,}=useContext(AuthContex)
+    const { user, googleLogin, loading, setLoading, loginInEmailPassword, } = useContext(AuthContex)
+    const { register, handleSubmit, watch, formState: { errors }, reset } = useForm()
+    const navigate = useNavigate()
+    const location = useLocation()
+    const from = location?.from?.status?.pathname || '/'
 
-    
+    const handleGoogle = () => {
+        googleLogin()
+            .then(result => {
+                toast.success('succefull login google')
+                navigate(from, { replace: true })
+            })
+            .catch(error => {
+                toast.error(error.message)
+                setLoading(false)
+            })
+    }
+
+    const onSubmit = data => {
+
+        console.log(data.email);
+        console.log(data.password)
+        loginInEmailPassword(data.email, data.password)
+            .then(result => {
+                navigate(from, { replace: true })
+                toast.success('Login Successfull')
+            })
+            .catch(err => {
+                console.log(err);
+                toast.error(err.message)
+                setLoading(false)
+            })
+
+    }
 
 
     if (loading) {
-        return <div className='flex justify-center items-center'>
+        return <div className='flex justify-center items-center min-h-screen'>
             <ThreeCircles
                 height="200"
                 width="200"
@@ -44,20 +77,37 @@ const Login = () => {
                             </div>
                             <div className="divide-y divide-gray-200">
                                 <div className="py-8 text-base leading-6 space-y-4 text-gray-700 sm:text-lg sm:leading-7">
-                                    <div className="relative">
-                                        <input autoComplete="off" id="email" name="email" type="text" className="peer placeholder-transparent h-10 w-full border-b-2 border-gray-300 text-gray-900 focus:outline-none focus:borer-rose-600" placeholder="Email address" />
-                                        <label htmlFor="email" className="absolute left-0 -top-3.5 text-gray-600 text-sm peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-440 peer-placeholder-shown:top-2 transition-all peer-focus:-top-3.5 peer-focus:text-gray-600 peer-focus:text-sm">Email Address</label>
-                                    </div>
-                                    <div className="relative">
-                                        <input autoComplete="off" id="password" name="password" type="password" className="peer placeholder-transparent h-10 w-full border-b-2 border-gray-300 text-gray-900 focus:outline-none focus:borer-rose-600" placeholder="Password" />
-                                        <label htmlFor="password" className="absolute left-0 -top-3.5 text-gray-600 text-sm peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-440 peer-placeholder-shown:top-2 transition-all peer-focus:-top-3.5 peer-focus:text-gray-600 peer-focus:text-sm">Password</label>
-                                    </div>
-                                    <div className="relative flex justify-center">
-                                        <button className="bg-blue-500 text-white rounded-md px-2 py-1">Submit</button>
-                                    </div>
+
+                                    <form onSubmit={handleSubmit(onSubmit)} className="bg-white">
+
+
+
+                                        <div className="flex items-center border-2 py-2 px-3 rounded-2xl mb-4">
+                                            <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-gray-400" fill="none"
+                                                viewBox="0 0 24 24" stroke="currentColor">
+                                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2"
+                                                    d="M16 12a4 4 0 10-8 0 4 4 0 008 0zm0 0v1.5a2.5 2.5 0 005 0V12a9 9 0 10-9 9m4.5-1.206a8.959 8.959 0 01-4.5 1.207" />
+                                            </svg>
+                                            <input className="pl-2 outline-none border-none" {...register('email', { required: true })} type="email" name="email" id="" placeholder="Email Address" /><br />
+                                        </div>
+                                        {errors.email && <span>This field is required {errors.message}</span>}
+                                        <div className="flex items-center border-2 py-2 px-3 rounded-2xl">
+                                            <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-gray-400" viewBox="0 0 20 20"
+                                                fill="currentColor">
+                                                <path fillRule="evenodd"
+                                                    d="M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z"
+                                                    clipRule="evenodd" />
+                                            </svg>
+                                            <input {...register('password', { required: 'must be password' })} className="pl-2 outline-none border-none" type="password" name="password" id="" placeholder="Password" /> <br />
+                                        </div>
+                                        {errors.password && <span>{errors.password.message}</span>}
+
+                                        <button type="submit" className="block w-full bg-indigo-600 mt-4 py-2 rounded-2xl text-white font-semibold mb-2">Login in</button>
+                                    </form>
+                                    {errors.image && <span>This field is required {errors?.image?.message}</span>}
 
                                     <div className='flex gap-4 justify-center'>
-                                        <Link ><FcGoogle className='text-4xl'></FcGoogle></Link>
+                                        <Link onClick={handleGoogle}><FcGoogle className='text-4xl'></FcGoogle></Link>
                                         <Link ><FaGithubSquare className='text-4xl'></FaGithubSquare></Link>
                                     </div>
                                 </div>

@@ -25,7 +25,7 @@ const Context = ({ children }) => {
 
     const loginInEmailPassword = (email, password) => {
         setLoading(true)
-        return signInWithEmailAndPassword
+        return signInWithEmailAndPassword(auth,email,password)
     }
 
     const logOut = () => {
