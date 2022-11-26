@@ -6,6 +6,7 @@ import { AuthContex } from '../../Context/Context';
 import { ThreeCircles } from 'react-loader-spinner';
 import toast from 'react-hot-toast';
 import { useForm } from 'react-hook-form';
+import { jwtTokenCreate } from '../../Auth/useAuth';
 
 
 const Login = () => {
@@ -34,14 +35,28 @@ const Login = () => {
         console.log(data.password)
         loginInEmailPassword(data.email, data.password)
             .then(result => {
-                navigate(from, { replace: true })
-                toast.success('Login Successfull')
+
+                jwtTokenCreate(data.email)
+                    .then(result => {
+                        console.log(result)
+                        if (result.success) {
+                            toast.success('Login Successfull')
+                            localStorage.setItem('token' , result.token)
+                            navigate(from, { replace: true })
+
+                        } else {
+                            toast.error(result.message)
+                            console.log(result.message)
+                            setLoading(false)
+                        }
+                    })
+                    .catch(err => {
+                        console.log(err);
+                        toast.error(err.message)
+                        setLoading(false)
+                    })
             })
-            .catch(err => {
-                console.log(err);
-                toast.error(err.message)
-                setLoading(false)
-            })
+
 
     }
 

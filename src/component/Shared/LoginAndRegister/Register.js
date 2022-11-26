@@ -23,8 +23,10 @@ const Register = () => {
 
     // console.log(users)
     const onSubmit = data => {
-        const { password, email, name, image } = data
+        const { password, email, name, image, role } = data
         // console.log(image)
+
+
 
         if (data.image) {
             uploadeImg(data.image)
@@ -43,8 +45,8 @@ const Register = () => {
                                         const userInfo = {
                                             name,
                                             email,
-                                            verify: true,
-                                            role: 'user'
+                                            verify: false,
+                                            role
                                         }
                                         // console.log(userInfo);
                                         PostUser(userInfo)
@@ -54,9 +56,9 @@ const Register = () => {
                                                     toast.success(data.message || 'successfull database add')
                                                     reset()
 
-                                                    // logOut().then(res => navigate('/login'))
+                                                    logOut().then(res => navigate('/login'))
 
-                                                    navigate(from, { replace: true })
+                                                    // navigate(from, { replace: true })
 
                                                 } else {
                                                     toast.error(data.message)
@@ -183,7 +185,7 @@ const Register = () => {
                                 </svg>
                                 <input {...register('name', { required: true })} className="pl-2 outline-none border-none" type="text" name="name" id="name" placeholder="Full name" /><br />
                             </div>
-                            {errors.name && <span>This field is required {errors.message}</span>}
+                            {errors.name && <span className='text-red-400 font-bold'>This field is required {errors.message}</span>}
 
                             <div className="flex items-center border-2 py-2 px-3 rounded-2xl mb-4">
                                 <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-gray-400" fill="none"
@@ -193,7 +195,7 @@ const Register = () => {
                                 </svg>
                                 <input className="pl-2 outline-none border-none" {...register('email', { required: true })} type="email" name="email" id="" placeholder="Email Address" /><br />
                             </div>
-                            {errors.email && <span>This field is required {errors.message}</span>}
+                            {errors.email && <span className='text-red-400 font-bold'>This field is required {errors.message}</span>}
                             <div className="flex items-center border-2 py-2 px-3 rounded-2xl">
                                 <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-gray-400" viewBox="0 0 20 20"
                                     fill="currentColor">
@@ -203,16 +205,31 @@ const Register = () => {
                                 </svg>
                                 <input {...register('password', { required: 'must be password' })} className="pl-2 outline-none border-none" type="password" name="password" id="" placeholder="Password" /> <br />
                             </div>
-                            {errors.password && <span>{errors.password.message}</span>}
+                            {errors.password && <span className='text-red-400 font-bold'>{errors.password.message}</span>}
                             <input {...register('image', { required: 'image mast be provide' })}
                                 accept='image/*'
                                 type="file"
                                 id="img"
                                 alt=""
                                 className='mt-2 rounded-lg border-4 border-blue-700' /> <br />
+                            <div className='flex justify-between'>
+                                <div className='flex items-center'>
+                                    <h1 className='text-xl font-bold '>Account Type: </h1>
+
+                                </div>
+                                <div>
+
+                                    <select {...register('role')} name="" id="" className='border-4 rounded-lg p-2'>
+                                        <option value="user" className='border-1 rounded-lg p-1'>User</option>
+                                        <option value="seller" className='border-1 rounded-lg p-1'>Seller</option>
+                                    </select>
+                                </div>
+                            </div>
                             <button type="submit" className="block w-full bg-indigo-600 mt-4 py-2 rounded-2xl text-white font-semibold mb-2">Sing Up</button>
+
+
                         </form>
-                        {errors.image && <span>This field is required {errors?.image?.message}</span>}
+                        {errors.image && <span className='text-red-400 font-bold'>This field is required {errors?.image?.message}</span>}
 
                         <div className='flex gap-4 justify-center'>
                             <Link onClick={handleGoogle}><FcGoogle className='text-4xl'></FcGoogle></Link>

@@ -6,6 +6,8 @@ import Mobiles from '../../Products/Mobiles/Mobiles';
 import AwesomeSlider from 'react-awesome-slider';
 import styles from '../../Products/Mobiles/Mobile.css';
 import 'react-awesome-slider/dist/custom-animations/cube-animation.css';
+import { Link } from 'react-router-dom';
+import BandNameCatagori from '../../Products/Catagoris/BandNameCatagori';
 
 const Home = () => {
     const [loadingMobiles, setLoadingsMobils] = useState(true)
@@ -36,7 +38,8 @@ const Home = () => {
     useEffect(() => {
         allMobielsDatas()
     }, [])
-    console.log(mobiels);
+    // console.log(mobiels);
+
     if (loadingMobiles) {
         return <div className='flex justify-center items-center min-h-screen'>
             <ThreeCircles
@@ -64,14 +67,8 @@ const Home = () => {
     );
     return (
         <div className='min-h-screen mt-4 '>
-            
 
-            <div className='flex flex-row justify-center gap-3  bg-blue-500 p-2 rounded-t-lg '>
-               <button className='hover:bg-stone-800 p-2 rounded-lg text-white text-lg font-semibold '>Apple</button>
-               <button className='hover:bg-stone-800 p-2 rounded-lg text-white text-lg font-semibold '>Samsung</button>
-               <button className='hover:bg-stone-800 p-2 rounded-lg text-white text-lg font-semibold '>vivo</button>
-               <button className='hover:bg-stone-800 p-2 rounded-lg text-white text-lg font-semibold '>oppo</button>
-            </div>
+            <BandNameCatagori></BandNameCatagori>
 
             {/* <div>
                 {

@@ -3,6 +3,8 @@ import toast from 'react-hot-toast';
 import { ThreeCircles } from 'react-loader-spinner';
 import { useParams } from 'react-router-dom';
 import { catagoriMobiel } from '../../Auth/useAuth';
+import Mobiles from '../Mobiles/Mobiles';
+import BandNameCatagori from './BandNameCatagori';
 
 const Catagoris = () => {
     const [loadingMobiles, setLoadingsMobils] = useState(true)
@@ -49,8 +51,15 @@ const Catagoris = () => {
         </div>
     }
     return (
-        <div>
-            
+
+        <div className='mt-2'>
+            <BandNameCatagori></BandNameCatagori>
+
+        <div className='grid grid-cols-1 md:grid-cols-2 gap-3'>
+            {
+                catagoris.map(mobile=> <Mobiles key={mobile._id} mobile={mobile}></Mobiles>)
+            }
+        </div>
         </div>
     );
 };

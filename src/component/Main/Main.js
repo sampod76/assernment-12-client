@@ -11,9 +11,11 @@ const Main = () => {
 
                 <Header></Header>
             </div>
-            <div className='container mx-auto'>
-            <Outlet></Outlet>
+
+            <div className='container mx-auto min-h-screen'>
+                <Outlet></Outlet>
             </div>
+
             <div>
                 <Footer></Footer>
             </div>
