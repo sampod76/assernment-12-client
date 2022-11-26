@@ -14,7 +14,20 @@ const BookCard = ({ data, refetch }) => {
     const { name, model, sellerInfo, stock, img, } = mobileData
     // console.log(sellerInfo?.selarPrice);
 
- 
+    const getMobile = () => {
+        singleMobile(mobileId)
+            .then(result => {
+                // console.log(Object.keys(result.data));
+                // toast.success('successfull gat mobile')
+                setMobileData(result.data)
+                setLoadings(false)
+            })
+            .catch(err => toast.error(err.message))
+    }
+
+    useEffect(() => {
+        getMobile()
+    }, [])
 
 
 
