@@ -57,7 +57,7 @@ const Home = () => {
         </div>
     }
 
-    // // console.log(sellerInfo)
+    // // console.log(sellarInfo)
     const slider = (
         <AwesomeSlider cssModule={styles}>
             <div data-src="https://www.bdstall.com/asset/product-image/giant_171825.jpg" />
@@ -75,7 +75,7 @@ const Home = () => {
                     slider
                 }
             </div> */}
-            <div className='grid grid-cols-1 md:grid-cols-2 gap-3'>
+            <div className='grid grid-cols-1 md:grid-cols-2 gap-5'>
                 {
                     mobiels?.map(mobile => <Mobiles key={mobile._id} mobile={mobile}></Mobiles>)
                 }

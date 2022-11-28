@@ -1,17 +1,18 @@
-import React from "react"
+
 import axios from 'axios'
-import { async } from "@firebase/util"
-import { useQuery } from "react-query"
+import toast from 'react-hot-toast'
+import { useQuery } from 'react-query'
 
 // const url = 
 
 export const jwtTokenCreate = async (email) => {
-    const res = await fetch(`http://localhost:5000/jwt`,{
+    const res = await fetch(`http://localhost:5000/jwt`, {
         method: 'POST',
         headers: {
-            'content-type': 'application/json'
+            'content-type': 'application/json',
+            authorization: localStorage.getItem('token')
         },
-        body: JSON.stringify({email})
+        body: JSON.stringify({ email })
     })
     const data = await res.json()
     return data
@@ -35,6 +36,43 @@ export const PostUser = async (userInfo) => {
 
 }
 
+
+// ---------------------------------------------------
+//get all user by admin 
+export const AllusersForAdmin = () => {
+    const { data: allusers = [], isLoading, refetch } = useQuery({
+        queryKey: ['allusers'],
+        queryFn: async () => {
+            const res = await fetch('http://localhost:5000/users',{
+                headers:{
+                    authorization: localStorage.getItem('token')
+                }
+            })
+            const result = await res.json()
+            if (result.success) {
+                toast.success('Get all user by admin')
+                return result.data
+            } else {
+                toast.error(result.message)
+            }
+        }
+    })
+
+    return { allusers, isLoading, refetch }
+}
+/* note : client side jast call 
+
+  const {allusers,isLoading,refetch}=AllusersForAdmin()
+*/
+
+// ----------------------------------------------------------
+
+
+
+
+
+// gat all mobile 
+
 export const allMobiels = async () => {
     const res = await axios.get(`http://localhost:5000/mobiles`, {
         headers: {
@@ -44,6 +82,53 @@ export const allMobiels = async () => {
     // console.log(res)
     return res.data
 
+}
+
+
+// delete single mobile 
+export const deleteMobileById = async (id) => {
+    const res = await fetch(`http://localhost:5000/mobiles/${id}`, {
+        method: 'DELETE',
+        headers: {
+            authorization: localStorage.getItem('token')
+        }
+    })
+    const result = await res.json()
+
+    return result
+}
+
+//create single mobile 
+
+export const createOrAddProduct = async (mobileData) => {
+    const res = await fetch('http://localhost:5000/mobiles', {
+        method: 'POST',
+        headers: {
+            'content-type': 'application/json',
+            authorization: localStorage.getItem('token')
+        },
+        body: JSON.stringify(mobileData)
+    })
+    const data = await res.json()
+
+    return data
+
+}
+
+
+//update mobile 
+export const updateMobileDatas = async (id, data) => {
+    const res = await fetch(`http://localhost:5000/mobiles/${id}`, {
+        method: 'PUT',
+        headers: {
+            'content-type': 'application/json',
+            authorization: localStorage.getItem('token')
+        },
+        body: JSON.stringify(data)
+
+    })
+    const result = await res.json()
+    return result
 }
 
 export const catagoriMobiel = async (bandname) => {
@@ -62,6 +147,7 @@ export const singleMobile = async (id) => {
             authorization: localStorage.getItem('token')
         }
     })
+
     return res.data
 }
 
@@ -79,6 +165,21 @@ export const BookingMobile = (PostData) => {
     })
 
 }
+
+// booing Update
+export const bookingUpdateMobile = (id) => {
+
+    return fetch(`http://localhost:5000/booking/${id}`, {
+        method: 'PATCH',
+        headers: {
+            'content-type': 'application/json',
+            authorization: localStorage.getItem('token')
+        },
+
+    })
+
+}
+
 export const WhiteList = (PostData) => {
 
     return fetch('http://localhost:5000/whitelist', {
@@ -96,7 +197,6 @@ export const whiteListDeletd = (id) => {
     return fetch(`http://localhost:5000/whitelist/${id}`, {
         method: 'DELETE',
         headers: {
-
             authorization: localStorage.getItem('token')
         },
 
@@ -111,6 +211,18 @@ export const bookingListDeletd = (id) => {
         },
 
     })
+}
+
+export const adsProductsHook = async (id) => {
+    const res = await fetch(`http://localhost:5000/adsproducts/${id}`, {
+        method: 'POST',
+        headers: {
+            'content-type': 'application/json',
+            authorization: localStorage.getItem('token')
+        }
+    })
+    const result = await res.json()
+    return result
 }
 
 

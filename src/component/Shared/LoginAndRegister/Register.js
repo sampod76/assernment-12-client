@@ -1,10 +1,10 @@
-import { useContext, useEffect, useState } from 'react';
+import { useContext, useState } from 'react';
 import { FaGithubSquare } from 'react-icons/fa';
 
 import { FcGoogle } from 'react-icons/fc';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { AuthContex } from '../../Context/Context';
-import { Audio, ThreeCircles } from 'react-loader-spinner'
+import { ThreeCircles } from 'react-loader-spinner'
 import toast from 'react-hot-toast';
 import { useForm } from "react-hook-form";
 import { uploadeImg } from '../../fetch-data-load/imgDB';
@@ -12,7 +12,7 @@ import { PostUser } from '../../Auth/useAuth';
 
 
 const Register = () => {
-    const { singUpEmainPassword, googleLogin, loading, setLoading, updateInfo, logOut, user } = useContext(AuthContex)
+    const { singUpEmainPassword, googleLogin, loading, setLoading, updateInfo, logOut, user, userDatabase } = useContext(AuthContex)
 
     const [userImg, setUserImg] = useState("")
     const { register, handleSubmit, watch, formState: { errors }, reset } = useForm()
@@ -24,9 +24,10 @@ const Register = () => {
     // console.log(users)
     const onSubmit = data => {
         const { password, email, name, image, role } = data
-        // console.log(image)
 
 
+
+        console.log(data)
 
         if (data.image) {
             uploadeImg(data.image)
@@ -36,22 +37,26 @@ const Register = () => {
 
                         toast.success('image uploaded successfull')
                         setUserImg(result.data.display_url)
+                        // console.log(result.data.display_url)
 
                         singUpEmainPassword(email, password)
                             .then(result => {
+
                                 toast.success('succefull account create ')
-                                updateInfo(name, userImg)
+                                updateInfo(name)
                                     .then(result => {
+                                        // console.log('currentupdat')
                                         const userInfo = {
                                             name,
                                             email,
                                             verify: false,
-                                            role
+                                            role: role ? role : 'user',
+                                            img: result?.data?.display_url
                                         }
                                         // console.log(userInfo);
                                         PostUser(userInfo)
                                             .then(data => {
-                                                console.log(data)
+                                                // console.log(data)
                                                 if (data.success) {
                                                     toast.success(data.message || 'successfull database add')
                                                     reset()
@@ -72,23 +77,24 @@ const Register = () => {
                                     })
                                     .catch(err => {
                                         toast.error(err.message)
-                                        console.log(err);
+                                        // console.log(err);
                                         setLoading(false)
                                     })
                             })
                             .catch(err => {
                                 setLoading(false)
+                                // console.log(err);
                                 toast.error(err.message)
                             })
 
                     } else {
                         toast.error(data.status)
-                        console.log(data.status)
+                        // console.log(data.status)
 
                     }
                 })
                 .catch(err => {
-                    console.log(err);
+                    // console.log(err);
                     toast.error(err.message)
                     setLoading(false)
                 })
@@ -98,13 +104,13 @@ const Register = () => {
 
     };
 
-    console.log(user);
+
 
     const handleGoogle = () => {
         googleLogin()
             .then(result => {
 
-                // console.log(result)
+                console.log(result)
                 toast.success('login successfull')
 
                 const userInfo = {
@@ -114,6 +120,12 @@ const Register = () => {
                     role: 'user'
                 }
                 // console.log(userInfo);
+                // console.log(userInfo);
+                // এটি খুব গুরুত্বপূর্ণ এইখানে যখন একজন ইউজার প্রথমবার লগইন করবে তখনই তাকে আমরা ক্রিয়েট করে ফেলব | তারপর আবার আরেকটা aip  মাধ্যমে ডাটাবেজ থেকে ইউজারটি কেনে কন্টাক্ট এ ফ্রিতে রাখবো তার পরে এইখানে এইখানে এই কন্ডিশন দেবো । না হলে সে বারবার আমার ডাটাবেজের উজার  ক্রিয়েট করতে থাকবে
+                if (userDatabase?.email === result.user.email) {
+                    console.log('instde')
+                    return navigate(from, { replace: true })
+                }
                 PostUser(userInfo)
                     .then(data => {
                         console.log(data)
@@ -127,15 +139,20 @@ const Register = () => {
                         } else {
                             toast.error(data.message)
                             console.log(data.message);
+                            setLoading(false)
                         }
                     })
-                    .catch(err => toast.error(err.message))
+                    .catch(err => {
+                        setLoading(false)
+                        toast.error(err.message)
+                    })
 
                 toast.success('User info Updated++++')
 
             })
             .catch(error => {
                 toast.error(error.message)
+                setLoading(false)
             })
     }
 
@@ -159,8 +176,8 @@ const Register = () => {
     return (
         <div>
 
-            <div className="h-screen md:flex">
-                <div
+            <div className="h-screen ">
+                {/* <div
                     className="relative overflow-hidden md:flex w-1/2 bg-gradient-to-tr from-blue-800 to-purple-700 i justify-around items-center hidden">
                     <div>
                         <h1 className="text-white font-bold text-4xl font-sans">TrustShop</h1>
@@ -171,39 +188,39 @@ const Register = () => {
                     <div className="absolute -bottom-40 -left-20 w-80 h-80 border-4 rounded-full border-opacity-30 border-t-8"></div>
                     <div className="absolute -top-40 -right-0 w-80 h-80 border-4 rounded-full border-opacity-30 border-t-8"></div>
                     <div className="absolute -top-20 -right-20 w-80 h-80 border-4 rounded-full border-opacity-30 border-t-8"></div>
-                </div>
-                <div className="flex md:w-1/2 justify-center py-10 items-center bg-white">
-                    <div>
-                        <form onSubmit={handleSubmit(onSubmit)} className="bg-white">
+                </div> */}
+                <div className=" md:w-1/2 lg:w-1/3 mx-auto">
+                    <div className=" bg-slate-200 p-2  rounded-xl p-5 h-fit  ">
+                        <form onSubmit={handleSubmit(onSubmit)} className='w-full' >
                             <h1 className="text-gray-800 font-bold text-2xl mb-1">Hello Again!</h1>
                             <p className="text-sm font-normal text-gray-600 mb-7">Welcome Back</p>
-                            <div className="flex items-center border-2 py-2 px-3 rounded-2xl mb-4">
+                            <div className="flex items-center  border-2 py-2 px-3 rounded-2xl mb-4">
                                 <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-gray-400" viewBox="0 0 20 20"
                                     fill="currentColor">
                                     <path fillRule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z"
                                         clipRule="evenodd" />
                                 </svg>
-                                <input {...register('name', { required: true })} className="pl-2 outline-none border-none" type="text" name="name" id="name" placeholder="Full name" /><br />
+                                <input {...register('name', { required: true })} className="pl-2 w-full outline-none bg-slate-100 rounded-lg p-2  border-none" type="text" name="name" id="name" placeholder="Full name" /><br />
                             </div>
                             {errors.name && <span className='text-red-400 font-bold'>This field is required {errors.message}</span>}
 
-                            <div className="flex items-center border-2 py-2 px-3 rounded-2xl mb-4">
+                            <div className="flex items-center  border-2 py-2 px-3 rounded-2xl mb-4">
                                 <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-gray-400" fill="none"
                                     viewBox="0 0 24 24" stroke="currentColor">
                                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2"
                                         d="M16 12a4 4 0 10-8 0 4 4 0 008 0zm0 0v1.5a2.5 2.5 0 005 0V12a9 9 0 10-9 9m4.5-1.206a8.959 8.959 0 01-4.5 1.207" />
                                 </svg>
-                                <input className="pl-2 outline-none border-none" {...register('email', { required: true })} type="email" name="email" id="" placeholder="Email Address" /><br />
+                                <input className="pl-2 w-full outline-none bg-slate-100 rounded-lg p-2  border-none" {...register('email', { required: true })} type="email" name="email" id="" placeholder="Email Address" /><br />
                             </div>
                             {errors.email && <span className='text-red-400 font-bold'>This field is required {errors.message}</span>}
-                            <div className="flex items-center border-2 py-2 px-3 rounded-2xl">
+                            <div className="flex items-center  border-2 py-2 px-3 rounded-2xl">
                                 <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-gray-400" viewBox="0 0 20 20"
                                     fill="currentColor">
                                     <path fillRule="evenodd"
                                         d="M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z"
                                         clipRule="evenodd" />
                                 </svg>
-                                <input {...register('password', { required: 'must be password' })} className="pl-2 outline-none border-none" type="password" name="password" id="" placeholder="Password" /> <br />
+                                <input {...register('password', { required: 'must be password' })} className="pl-2 w-full outline-none bg-slate-100 rounded-lg p-2  border-none" type="password" name="password" id="" placeholder="Password" /> <br />
                             </div>
                             {errors.password && <span className='text-red-400 font-bold'>{errors.password.message}</span>}
                             <input {...register('image', { required: 'image mast be provide' })}
@@ -213,16 +230,19 @@ const Register = () => {
                                 alt=""
                                 className='mt-2 rounded-lg border-4 border-blue-700' /> <br />
                             <div className='flex justify-between'>
-                                <div className='flex items-center'>
+                                <div className='flex items-center' >
                                     <h1 className='text-xl font-bold '>Account Type: </h1>
 
                                 </div>
                                 <div>
-
-                                    <select {...register('role')} name="" id="" className='border-4 rounded-lg p-2'>
+                                    <label htmlFor="user">User</label>
+                                    <input {...register('role')} type="radio" value="user" className='mx-1' name="role" id="user" />
+                                    <label htmlFor="sellar">sellar</label>
+                                    <input {...register('role')} type="radio" value="sellar" className='mx-1' name="role" id="sellar" />
+                                    {/* <select {...register('role')} defaultValue='user' name="" id="" className='border-4 rounded-lg p-2'>
                                         <option value="user" className='border-1 rounded-lg p-1'>User</option>
-                                        <option value="seller" className='border-1 rounded-lg p-1'>Seller</option>
-                                    </select>
+                                        <option value="sellar" className='border-1 rounded-lg p-1'>Sellar</option>
+                                    </select> */}
                                 </div>
                             </div>
                             <button type="submit" className="block w-full bg-indigo-600 mt-4 py-2 rounded-2xl text-white font-semibold mb-2">Sing Up</button>

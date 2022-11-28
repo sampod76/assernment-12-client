@@ -7,20 +7,33 @@ import { bookingListDeletd, singleMobile } from '../Auth/useAuth';
 const BookCard = ({ data, refetch }) => {
     const [loading, setLoadings] = useState(true)
     // console.log(Object.keys(data))
- 
+
     const [mobileData, setMobileData] = useState({})
     const { _id, mobileId, userNumber, userLocation, useremail } = data
+    console.log(data);
 
-    const { name, model, sellerInfo, stock, img, } = mobileData
-    // console.log(sellerInfo?.selarPrice);
 
+
+    const { model, sellarInfo, stock, img, } = mobileData
+    // console.log(sellarInfo?.sellarPrice);
+
+    console.log(mobileData)
+
+    // get single mobile data from all mobile database 
     const getMobile = () => {
         singleMobile(mobileId)
             .then(result => {
                 // console.log(Object.keys(result.data));
                 // toast.success('successfull gat mobile')
-                setMobileData(result.data)
-                setLoadings(false)
+                if (result.success) {
+
+                    setMobileData(result.data)
+                    console.log(result.data)
+                    setLoadings(false)
+                } else {
+                    console.log(result.message)
+                    toast.error(result.message)
+                }
             })
             .catch(err => toast.error(err.message))
     }
@@ -45,9 +58,9 @@ const BookCard = ({ data, refetch }) => {
             }).catch(err => toast.error(err.message))
     }
 
-    // console.log(sellerInfo)
+    // console.log(sellarInfo)
     // const handlePayment =()=>{
-    //     const selinfo={mobileId,_id,model,price:sellerInfo?.selarPrice,useremail,sellerInfo
+    //     const selinfo={mobileId,_id,model,price:sellarInfo?.sellarPrice,useremail,sellarInfo
 
     //     }
     //     navigate(`/payment/${_id}`, {state:{selinfo}})
@@ -82,9 +95,9 @@ const BookCard = ({ data, refetch }) => {
                     <div className="card-body ">
                         <div className='block md:flex justify-between'>
 
-                            <h2 className="card-title font-semibold border-4 rounded-lg p-1 hover:border-red-600">Price: {sellerInfo?.selarPrice}tk</h2>
+                            <h2 className="card-title font-semibold border-4 rounded-lg p-1 hover:border-red-600">Price: {sellarInfo?.sellarPrice}tk</h2>
 
-                            <h2 className="card-title font-semibold border-4 rounded-lg p-1 hover:border-red-600">Selar Name: {name}</h2>
+                            <h2 className="card-title font-semibold border-4 rounded-lg p-1 hover:border-red-600">Selar Name: { }</h2>
 
                         </div>
                         <p className='md:text-lg font-bold'>Model:{model}</p>
@@ -92,19 +105,25 @@ const BookCard = ({ data, refetch }) => {
 
                         <div className=' md:text-2xl rounded-lg text-white font-bold p-2 w-full flex justify-between'>
                             <div className='bg-purple-500 w-fit rounded'>
-                                {stock === true ? <button className='p-1' >Available</button > : <button className='btn'>Stock Out</button >}
+                                {stock === true ? <button className='p-1' >Available</button > : <button className='btn btn-info'>Stock Out</button >}
 
                             </div>
                             <div>
 
-                                <button onClick={handleCancleBooking} className="md:btn md:btn-primary md:text-lg font-bold bg-blue-600 p-1 
-                rounded  text-white text-center mx-2 ">
-                                    Cancle
-                                </button>
-                                <Link to={`/payment/${_id}`}  className="md:btn md:btn-primary md:text-lg font-bold bg-blue-600 p-1 
-                rounded  text-white text-center ">
-                                    Payment
-                                </Link>
+
+
+
+                                {
+                                    stock ? <>
+                                        <button onClick={handleCancleBooking} className="md:btn md:btn-primary md:text-lg font-bold bg-blue-600 p-1 rounded  text-white text-center mx-2 ">
+                                            Cancle
+                                        </button>
+                                        <Link to={`/payment/${_id}`} className="md:btn md:btn-primary md:text-lg font-bold bg-blue-600 p-1 rounded  text-white text-center ">
+                                            Payment
+                                        </Link>
+                                    </>
+                                        : <button className='btn btn-active btn-accent '>Alrady  purchased</button>
+                                }
                             </div>
 
 

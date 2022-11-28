@@ -6,7 +6,7 @@ import { AuthContex } from '../Context/Context';
 const PrivetRouter = ({ children }) => {
     const { user, loading } = useContext(AuthContex)
     const location = useLocation()
-    console.log(user)
+
 
     if (loading) {
         return <div className='flex justify-center items-center min-h-screen'>

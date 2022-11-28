@@ -4,12 +4,13 @@ import { loadStripe } from '@stripe/stripe-js';
 import { RotatingLines } from 'react-loader-spinner';
 import toast from 'react-hot-toast';
 import { AuthContex } from '../../Context/Context';
+import { bookingUpdateMobile, updateMobileDatas } from '../../Auth/useAuth';
 
 const ChackoutForm = ({ bookingData }) => {
 
     const { user } = useState(AuthContex)
-    const { mobileId, _id, model, useremail, sellerInfo } = bookingData
-    console.log(sellerInfo?.salarEmail);
+    const { mobileId, _id, model, useremail, sellarInfo } = bookingData
+    // console.log(sellarInfo?.sellarEmail);
 
     const [loading, setLoading] = useState(true)
     const [success, setSuccess] = useState('')
@@ -26,14 +27,14 @@ const ChackoutForm = ({ bookingData }) => {
                 "Content-Type": "application/json",
                 authorization: localStorage.getItem('token')
             },
-            body: JSON.stringify({ price: sellerInfo?.selarPrice }),
+            body: JSON.stringify({ price: sellarInfo?.sellarPrice }),
         })
             .then((res) => res.json())
             .then((data) => {
                 setLoading(false) //
                 setClientSecret(data.clientSecret)
             });
-    }, [sellerInfo?.selarPrice]);
+    }, [sellarInfo?.sellarPrice]);
 
 
     if (loading) {
@@ -101,12 +102,12 @@ const ChackoutForm = ({ bookingData }) => {
         if (paymentIntent.status === 'succeeded') {
 
             const payment = {
-                price: sellerInfo?.selarPrice,
+                price: sellarInfo?.sellarPrice,
                 transationId: paymentIntent.id,
                 useremail,
                 bookingId: _id,
                 mobileId,
-                selareEmail: sellerInfo.selareEmail
+                selareEmail: sellarInfo.selareEmail
 
 
             }
@@ -125,6 +126,31 @@ const ChackoutForm = ({ bookingData }) => {
                 .then(data => {
                     if (data.success) {
                         toast.success(data.message)
+                        const updateData = {
+                            stock: false
+
+                        }
+                        updateMobileDatas(mobileId, updateData)
+                            .then(result => {
+                                if (result.success) {
+                                    toast.success(result.message)
+                                    bookingUpdateMobile(_id)
+                                        .then(result => {
+                                            if (result.success) {
+                                                toast.success(result.message + 'paiddddddddd')
+                                            }
+                                            else {
+                                                toast.error(result.message)
+                                            }
+                                        })
+                                } else {
+                                    toast.error(result.message)
+                                }
+                            })
+                            .catch(err => {
+                                console.log(err.message)
+                                toast.error(err.message)
+                            })
 
                     } else {
                         toast.error(data.message)
@@ -138,7 +164,7 @@ const ChackoutForm = ({ bookingData }) => {
 
     };
     return (
-        <div >
+        <div className='my-2'>
             <form className='max-w-screen-lg mx-auto border-8 border-blue-500 rounded-lg p-3' onSubmit={handleSubmit}>
                 <CardElement
                     options={{

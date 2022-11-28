@@ -10,6 +10,7 @@ export const uploadeImg = async (image) => {
         body: formData
     });
     const imgUrl = await img.json();
+    
 
     return imgUrl
 }

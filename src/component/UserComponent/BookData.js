@@ -9,7 +9,7 @@ import BookCard from './BookCard';
 const BookData = () => {
 
     const { user, loading } = useContext(AuthContex)
-    console.log(user);
+
     const { data: bookingData = [], isLoading, refetch } = useQuery({
         queryKey: ['bookdata'],
         queryFn: async () => {
@@ -43,7 +43,7 @@ const BookData = () => {
 
     return (
         <div>
-            <h1 className='text-center text-3xl border-2 p-2 rounded border-black mt-2'>Please wait for seller's booking permission </h1>
+            <h1 className='text-center text-3xl border-2 p-2 rounded border-black mt-2'>Please wait for sellar's booking permission </h1>
             <div className=''>
                 {
                     bookingData.length ?
@@ -56,7 +56,7 @@ const BookData = () => {
 
                         </BookCard>)
 
-                        : <div className='text-7xl text-center'>No Whitelist</div>
+                        : <div className='text-7xl text-center'>No Booking</div>
 
                 }
             </div>

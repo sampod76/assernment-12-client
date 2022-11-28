@@ -1,48 +1,63 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import Header from '../Shared/NavBar/Header';
 import header from '../Main/Main.css'
 import { Link, Outlet } from 'react-router-dom';
 import Footer from '../Shared/Footer/Footer';
+import { AuthContex } from '../Context/Context';
 const DeshBoardLayout = () => {
-
+    const { userDatabase } = useContext(AuthContex)
+    // console.log(userDatabase);
+console.log(userDatabase)
     return (
-        <div>
+        <div className=''>
             <div className='header p-2'>
 
                 <Header></Header>
             </div>
-            <div className="drawer drawer-mobile">
+            <div className="drawer drawer-mobile container mx-auto shadow-2xl">
                 <input id="drawer-toggle" type="checkbox" className="drawer-toggle" />
-                <div className="drawer-content ">
+                <div className="drawer-content  ">
                     <Outlet></Outlet>
                 </div>
                 <div className="drawer-side">
                     <label htmlFor="drawer-toggle" className="drawer-overlay"></label>
-                    <ul className="menu p-4 w-80 bg-base-100 text-base-content">
+                    {
+                        userDatabase?.role === 'admin' &&
+                        <ul className="menu p-4 w-80 bg-base-100 text-base-content">
 
-                        <li><Link to='admin/alluser'>All users</Link></li>
-                        <li><Link to='admin/allsaller'>All Sellers</Link></li>
-                        <li><Link to='admin/reporteditem'>Reported Item</Link></li>
+                            <li className='mt-1 border-2 rounded-lg'><Link to='admin/alluser'>All users</Link></li>
+                            <li className='mt-1 border-2 rounded-lg'><Link to='admin/allsaller'>All sellars</Link></li>
+                            <li className='mt-1 border-2 rounded-lg'><Link to='admin/reporteditem'>Reported Item</Link></li>
 
-                    </ul>
+                        </ul>
+                    }
 
-{/*                   
-                    <ul className="menu p-4 w-80 bg-base-100 text-base-content">
-                        <li><Link to='user/products'>My Product</Link></li>
-                        <li><Link to='user/card'>My Product</Link></li>
-                    </ul>
 
-                    <ul className="menu p-4 w-80 bg-base-100 text-base-content">
-                        <li><Link to='saller/addProduct'>Add Products</Link></li>
-                        <li><Link to='saller/products'>Products</Link></li>
-                    </ul> */}
+                    {
+                        userDatabase?.role === 'user' &&
+                        <ul className="menu p-4 w-80 bg-base-100 text-base-content">
+                            <li className='mt-1 border-2 rounded-lg'><Link to='/user/whiteList'>Whitelist</Link></li>
+                            <li className='mt-1 border-2 rounded-lg'><Link to='/user/booking'>Booking List</Link></li>
+                        </ul>
+                    }
+
+                    {
+                        userDatabase?.role === 'sellar' &&
+                        <ul className="menu p-4 w-80 bg-base-100 text-base-content">
+                            <li className='mt-1 border-2 rounded-lg'><Link to='saller/addProduct'>Add Products</Link></li>
+                            <li className='mt-1 border-2 rounded-lg'><Link to='saller/products'>My Products</Link></li>
+                        </ul>
+                    }
 
                 </div>
             </div>
             {/* <div className='min-h-screen'>
                 <Outlet></Outlet>
             </div> */}
-            <Footer></Footer>
+            <div className=''>
+
+                <Footer></Footer>
+            </div>
         </div>
     );
 };

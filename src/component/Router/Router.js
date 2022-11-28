@@ -1,8 +1,13 @@
 import Admin from "../DeshBoard/Admin/Admin";
+import AllSellar from "../DeshBoard/Admin/AllSellar";
+import Allusers from "../DeshBoard/Admin/Allusers";
 import DeshBoardLayout from "../DeshBoard/DeshBoardLayout";
 import DeshBoard from "../DeshBoard/DeshBoardLayout";
+import AddProducts from "../DeshBoard/Saller/AddProducts";
+import AllProducts from "../DeshBoard/Saller/AllProducts";
 import Saller from "../DeshBoard/Saller/Saller";
 import User from "../DeshBoard/User/User";
+import ADSproductHome from "../Main/Home/ADSproductHome/ADSproductHome";
 import Home from "../Main/Home/Home";
 import Main from "../Main/Main";
 import Payment from "../Products/Add-Payment/Payment";
@@ -17,6 +22,7 @@ import Header from "../Shared/NavBar/Header";
 import BookData from "../UserComponent/BookData";
 
 import WhiteListComponent from '../UserComponent/WhiteListComponent'
+import AdminPrivetRoute from "./AdminRouter";
 import PrivetRouter from "./PrivetRouter";
 
 
@@ -30,12 +36,17 @@ export const Routers = createBrowserRouter([
         children: [
             {
                 path: '/',
-                element: <Home></Home>
+                element:<ADSproductHome></ADSproductHome>
             },
             {
                 path: '/home',
+                element:<ADSproductHome></ADSproductHome>
+            },
+            {
+                path: '/allMobiles',
                 element: <Home></Home>
             },
+
             {
                 path: '/login',
                 element: <Login></Login>
@@ -62,7 +73,7 @@ export const Routers = createBrowserRouter([
             },
             {
                 path: '/payment/:id',
-                element:<PrivetRouter><Payment></Payment></PrivetRouter>
+                element: <PrivetRouter><Payment></Payment></PrivetRouter>
             },
             {
                 path: '/blog',
@@ -80,9 +91,10 @@ export const Routers = createBrowserRouter([
             <Error></Error>
         </div>
     },
+    // AdminPrivetRoute
     {
         path: '/deshboard',
-        element: <DeshBoardLayout></DeshBoardLayout>,
+        element: <PrivetRouter><DeshBoardLayout></DeshBoardLayout></PrivetRouter> ,
         children: [
             {
                 path: '/deshboard',
@@ -96,15 +108,15 @@ export const Routers = createBrowserRouter([
             },
             {
                 path: '/deshboard/admin/alluser',
-                element: <div>/deshboard/admin/alluser</div>
+                element:<AdminPrivetRoute> <Allusers></Allusers></AdminPrivetRoute>
             },
             {
                 path: '/deshboard/admin/allsaller',
-                element: <div>hkjsdfkljsdkfljsd</div>
+                element:<AdminPrivetRoute><AllSellar></AllSellar></AdminPrivetRoute> 
             },
             {
                 path: '/deshboard/admin/reporteditem',
-                element: <div>/deshboard/admin/reporteditem</div>
+                // element: <
             },
             {
                 path: '/deshboard/saller',
@@ -114,25 +126,25 @@ export const Routers = createBrowserRouter([
 
             {
                 path: '/deshboard/saller/addProduct',
-                element: <div>/deshboard/saller/addProduct</div>
+                element: <AddProducts></AddProducts>
             },
             {
                 path: '/deshboard/saller/products',
-                element: <div>hkjsdfkljsdkfljsd</div>
+                element: <AllProducts></AllProducts>
             },
             {
                 path: '/deshboard/user',
                 element: <User></User>,
 
             },
-            {
-                path: '/deshboard/user/products',
-                element: <div>hkjsdfkljsdkfljsd</div>
-            },
-            {
-                path: '/deshboard/user/card',
-                element: <div>hkjsdfkljsdkfljsd</div>
-            },
+            // {
+            //     path: '/deshboard/user/products',
+            //     element: <div>hkjsdfkljsdkfljsd</div>
+            // },
+            // {
+            //     path: '/deshboard/user/card',
+            //     element: <div>hkjsdfkljsdkfljsd</div>
+            // },
 
         ]
     }

@@ -1,12 +1,13 @@
 import React, { useContext } from 'react';
 import { FcShop, IconName } from "react-icons/fc";
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { AuthContex } from '../../Context/Context';
 import { AiOutlineArrowRight } from "react-icons/ai";
 import { AiOutlineShoppingCart } from "react-icons/ai";
 
 const Header = () => {
     const { user, logOut } = useContext(AuthContex)
+    const navigate = useNavigate()
 
     const headerList = <>
         <li><Link to='/'>Home</Link></li>
@@ -14,7 +15,7 @@ const Header = () => {
         <li><Link to='/deshboard'>Deshboard</Link></li>
         <li><Link to='/blog'>Blog</Link></li>
         {
-            user?.uid ? <li><Link onClick={() => logOut()} >Log Out</Link></li> : <>
+            user?.uid ? <li><Link onClick={() => logOut().then(()=>navigate('/login') )} >Log Out</Link></li> : <>
                 <li><Link to='/login'>Sing In</Link></li>
                 <li><Link to='/register'>Register</Link></li>
 

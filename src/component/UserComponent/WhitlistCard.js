@@ -11,10 +11,6 @@ const WhitlistCard = ({ data ,refetch}) => {
     const { _id, mobileId, name, model, stock, img, useremail, paid, price, username, bookedConfirm } = data
 
 
-
-
-
-
     const onSubmit = modaldata => {
         console.log(data)
 
@@ -50,7 +46,18 @@ const WhitlistCard = ({ data ,refetch}) => {
     }
 
 
-    const handleBooking = () => {
+    const handleBookingDelele = () => {
+        whiteListDeletd(_id)
+        .then(res => res.json())
+        .then(data => {
+            console.log(data);
+            if (data.success) {
+                toast.success(data.message)
+                refetch()
+            } else {
+                toast.error(data.message)
+            }
+        }).catch(err => toast.error(err.message))
 
     }
 
@@ -71,13 +78,15 @@ const WhitlistCard = ({ data ,refetch}) => {
 
 
                         <div className=' md:text-2xl rounded-lg text-white font-bold p-2 w-full flex justify-between'>
-                            <div className='bg-purple-500 w-fit rounded'>
+                            <div className='bg-purple-500 w-fit rounded mr-2'>
                                 {data?.stock === true ? <button className='p-1' >Available</button > : <button className='btn'>Stock Out</button >}
 
                             </div>
 
-                            <label onClick={handleBooking} htmlFor="singleWhitlistModal" className="md:btn md:btn-primary text-lg font-bold bg-blue-600 p-1 rounded md:w-[30%] text-white text-center cursor-pointer">Booking</label>
-                            {/* <button  className="md:btn md:btn-primary md:text-lg font-bold bg-blue-600 p-1 rounded  text-white text-center ">Booking Now</button> */}
+                           <div>
+                           <button onClick={handleBookingDelele}  className="md:btn md:btn-primary md:text-lg font-bold bg-blue-600 p-1 rounded  text-white text-center mr-2 ">Delete</button>
+                            <label  htmlFor="singleWhitlistModal" className="md:btn md:btn-primary text-lg font-bold bg-blue-600 p-1 rounded md:w-[30%] text-white text-center cursor-pointer mt-1">Booking</label>
+                           </div>
                         </div>
 
                     </div>

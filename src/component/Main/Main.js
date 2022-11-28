@@ -12,7 +12,7 @@ const Main = () => {
                 <Header></Header>
             </div>
 
-            <div className='container mx-auto min-h-screen'>
+            <div className='container mx-auto min-h-screen shadow-2xl p-2'>
                 <Outlet></Outlet>
             </div>
 

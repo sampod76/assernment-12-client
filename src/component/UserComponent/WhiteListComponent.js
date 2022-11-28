@@ -19,7 +19,11 @@ const WhiteListComponent = () => {
     const { data: whiteListData = [], isLoading, refetch } = useQuery({
         queryKey: ['whitelist'],
         queryFn: async () => {
-            const res = await fetch(`http://localhost:5000/whitelist?email=${user?.email}`)
+            const res = await fetch(`http://localhost:5000/whitelist?email=${user?.email}`,{
+                headers:{
+                    authorization: localStorage.getItem('token')
+                }
+            })
             const result = await res.json()
 
             if (result.success) {
@@ -33,10 +37,7 @@ const WhiteListComponent = () => {
     })
 
 
-    const handleBooking = () => {
-
-    }
-
+ 
 
 
     if (isLoading) {

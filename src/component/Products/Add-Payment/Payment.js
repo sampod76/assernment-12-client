@@ -28,11 +28,6 @@ const Payment = () => {
         }
     })
 
-    console.log(bookingData);
-
-   
-
-
     if (isLoading) {
         return <div className='flex justify-center items-center min-h-screen'>
             <ThreeCircles
@@ -54,7 +49,7 @@ const Payment = () => {
     return (
         <div>
             <h1 className='text-xl md:text-4xl font-bold'>Mobile : {bookingData?.model}</h1>
-            <h1 className='text-xl md:text-4xl font-bold'>Please payment : {bookingData?.sellerInfo?.selarPrice} tk</h1>
+            <h1 className='text-xl md:text-4xl font-bold'>Please payment : {bookingData?.sellarInfo?.sellarPrice} tk</h1>
 
             <Elements stripe={stripePromise}>
                 <ChackoutForm bookingData={bookingData} />

@@ -6,12 +6,12 @@ import { AuthContex } from '../../Context/Context';
 import { ThreeCircles } from 'react-loader-spinner';
 import toast from 'react-hot-toast';
 import { useForm } from 'react-hook-form';
-import { jwtTokenCreate } from '../../Auth/useAuth';
+import { jwtTokenCreate, PostUser } from '../../Auth/useAuth';
 
 
 const Login = () => {
 
-    const { user, googleLogin, loading, setLoading, loginInEmailPassword, } = useContext(AuthContex)
+    const { user, googleLogin, loading, setLoading, loginInEmailPassword, userDatabase } = useContext(AuthContex)
     const { register, handleSubmit, watch, formState: { errors }, reset } = useForm()
     const navigate = useNavigate()
     const location = useLocation()
@@ -20,8 +20,46 @@ const Login = () => {
     const handleGoogle = () => {
         googleLogin()
             .then(result => {
-                toast.success('succefull login google')
-                navigate(from, { replace: true })
+
+                console.log(result)
+                toast.success('login successfull')
+
+                const userInfo = {
+                    name: result.user.displayName,
+                    email: result.user.email,
+                    verify: false,
+                    role: 'user'
+                }
+                // console.log(userInfo);
+ // এটি খুব গুরুত্বপূর্ণ এইখানে যখন একজন ইউজার প্রথমবার লগইন করবে তখনই তাকে আমরা ক্রিয়েট করে ফেলব | তারপর আবার আরেকটা aip  মাধ্যমে ডাটাবেজ থেকে ইউজারটি কেনে কন্টাক্ট এ ফ্রিতে রাখবো তার পরে এইখানে এইখানে এই কন্ডিশন দেবো । না হলে সে বারবার আমার ডাটাবেজের উজার  ক্রিয়েট করতে থাকবে
+                if (userDatabase?.email === result.user.email) {
+                    console.log('instde')
+                    return  navigate(from, { replace: true })
+                }
+
+                PostUser(userInfo)
+                    .then(data => {
+                        console.log(data)
+                        if (data.success) {
+                            toast.success(data.message || 'successfull database add')
+
+
+                            navigate(from, { replace: true })
+
+
+                        } else {
+                            toast.error(data.message)
+                            console.log(data.message);
+                            setLoading(false)
+                        }
+                    })
+                    .catch(err => {
+                        setLoading(false)
+                        toast.error(err.message)
+                    })
+
+                toast.success('User info Updated++++')
+
             })
             .catch(error => {
                 toast.error(error.message)
@@ -31,8 +69,7 @@ const Login = () => {
 
     const onSubmit = data => {
 
-        console.log(data.email);
-        console.log(data.password)
+
         loginInEmailPassword(data.email, data.password)
             .then(result => {
 
@@ -41,7 +78,7 @@ const Login = () => {
                         console.log(result)
                         if (result.success) {
                             toast.success('Login Successfull')
-                            localStorage.setItem('token' , result.token)
+                            localStorage.setItem('token', result.token)
                             navigate(from, { replace: true })
 
                         } else {
@@ -55,6 +92,11 @@ const Login = () => {
                         toast.error(err.message)
                         setLoading(false)
                     })
+            })
+            .catch(err => {
+                setLoading(false)
+                toast.error(err.message)
+                console.log(err)
             })
 
 
@@ -78,9 +120,9 @@ const Login = () => {
         </div>
     }
     return (
-        <div>
+        <div className=''>
 
-            <div className="min-h-screen bg-gray-100 py-6 flex flex-col justify-center sm:py-12">
+            <div className="  py-6 flex flex-col justify-center sm:py-12">
                 <div className="relative py-3 sm:max-w-xl sm:mx-auto">
                     <div
                         className="absolute inset-0 bg-gradient-to-r from-blue-300 to-blue-600 shadow-lg transform -skew-y-6 sm:skew-y-0 sm:-rotate-6 sm:rounded-3xl">
@@ -125,6 +167,7 @@ const Login = () => {
                                         <Link onClick={handleGoogle}><FcGoogle className='text-4xl'></FcGoogle></Link>
                                         <Link ><FaGithubSquare className='text-4xl'></FaGithubSquare></Link>
                                     </div>
+                                    <Link to='/register' className='underline decoration-cyan-700 text-base  flex justify-center'>Create a new account </Link>
                                 </div>
                             </div>
 

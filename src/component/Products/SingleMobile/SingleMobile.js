@@ -16,7 +16,7 @@ const SingleMobile = () => {
     const [orderData, setorderData] = useState({})
     const { bandname, id } = useParams()
     const { user } = useContext(AuthContex)
-    const { _id, name, model, sellerInfo, OfficalPrice, stock, reating, img, useYears } = mobileData
+    const { _id, name, model, sellarInfo, OfficalPrice, stock, reating, img, useYears } = mobileData
 
     const { register, handleSubmit, watch, formState: { errors }, reset } = useForm()
 
@@ -60,7 +60,7 @@ const SingleMobile = () => {
 
         const addcard = {
             mobileId: _id, name, model, stock, img, useremail: user?.email,
-            paid: false, price: sellerInfo.selarPrice, username: user?.displayName, bookedConfirm: false
+            paid: false, price: sellarInfo.sellarPrice, username: user?.displayName, bookedConfirm: false
         }
         WhiteList(addcard)
             .then(res => res.json())
@@ -83,7 +83,7 @@ const SingleMobile = () => {
         console.log(data)
 
         const orderMobileData = {
-            ...data, mobileId: _id, name, model, sellerInfo, stock, img, useremail: user?.email, paid: false,
+            ...data, mobileId: _id, name, model, sellarInfo, stock, img, useremail: user?.email, paid: false,
             bookedConfirm: true
         }
         BookingMobile(orderMobileData)
@@ -138,7 +138,7 @@ const SingleMobile = () => {
                     <div className="card-body ">
                         <div className='block md:flex justify-between'>
                             <h2 className="card-title font-semibold text-2xl">Band Name: {name}</h2>
-                            <p className="card-title font-semibold border-4 rounded-lg p-1 hover:border-red-600">Price: {sellerInfo?.selarPrice}tk</p>
+                            <p className="card-title font-semibold border-4 rounded-lg p-1 hover:border-red-600">Price: {sellarInfo?.sellarPrice}tk</p>
 
                         </div>
 
@@ -151,19 +151,19 @@ const SingleMobile = () => {
                             </div>
                             <div>
                                 {
-                                    sellerInfo?.veryfied ? <h1 className='flex justify-center items-center'><span className='text-black'>Verify:</span><GoVerified className='text-green-600 text-4xl'></GoVerified></h1> : <div><img className='w-11' src='https://i.ibb.co/4NhkSwp/very.png'></img></div>
+                                    sellarInfo?.veryfied ? <h1 className='flex justify-center items-center'><span className='text-black'>Verify:</span><GoVerified className='text-green-600 text-4xl'></GoVerified></h1> : <div><img className='w-11' src='https://i.ibb.co/4NhkSwp/very.png'></img></div>
                                 }
                             </div>
 
 
                         </div>
                         <div >
-                            <h1 className='border-2 rounded p-2 text-center text-lg font-bold'>Seller Info</h1>
+                            <h1 className='border-2 rounded p-2 text-center text-lg font-bold'>sellar Info</h1>
                             <h1 className='text-lg font-bold'>Used:{useYears} Months</h1>
-                            <h1 className='text-lg font-bold'>Saller: {sellerInfo?.seller} </h1>
-                            <h1 className='text-lg font-bold'>Loaction: {sellerInfo?.salarLoaction} </h1>
-                            <h1 className='text-lg font-bold'>Email: {sellerInfo?.salarEmail} </h1>
-                            <h1 className='text-lg font-bold'>{sellerInfo?.salarNumber} </h1>
+                            <h1 className='text-lg font-bold'>Saller: {sellarInfo?.sellar} </h1>
+                            <h1 className='text-lg font-bold'>Loaction: {sellarInfo?.sellarLoaction} </h1>
+                            <h1 className='text-lg font-bold'>Email: {sellarInfo?.sellarEmail} </h1>
+                            <h1 className='text-lg font-bold'>{sellarInfo?.sellarNumber} </h1>
                         </div>
                         <div className="card-actions flex justify-between">
 
@@ -212,7 +212,7 @@ const SingleMobile = () => {
                                     <input {...register('userLocation')} autoComplete="on" className="pl-2 outline-none border-none" type="text" name="userLocation" id="" placeholder="location" /> <br />
                                 </div>
 
-                                <button className='border-2 mx1 rounded p-1 border-green-600 font-bold'>Price: {sellerInfo?.selarPrice} TK</button>
+                                <button className='border-2 mx1 rounded p-1 border-green-600 font-bold'>Price: {sellarInfo?.sellarPrice} TK</button>
 
                                 <button type="submit" className="block w-full bg-indigo-600 mt-4 py-2 rounded-2xl text-white font-semibold mb-2">Booking</button>
 
