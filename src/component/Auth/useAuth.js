@@ -228,7 +228,7 @@ export const adsProductsHook = async (id) => {
 
 export const reportMobiles = (PostData) => {
 
-    return fetch('http://localhost:5000/reported', {
+    return fetch('https://assernment-12-serverside.vercel.app/reported', {
         headers: {
             authorization: localStorage.getItem('token')
         },

@@ -65,7 +65,7 @@ const BookCard = ({ data, refetch }) => {
         }
         console.log(datas)
 
-        const res = await fetch('http://localhost:5000/reported', {
+        const res = await fetch('https://assernment-12-serverside.vercel.app/reported', {
             method: 'POST',
             headers: {
                 'content-type': 'application/json',
