@@ -11,6 +11,10 @@ const WhitlistCard = ({ data ,refetch}) => {
     const { _id, mobileId, name, model, stock, img, useremail, paid, price, username, bookedConfirm } = data
 
 
+
+
+
+
     const onSubmit = modaldata => {
         console.log(data)
 

@@ -34,6 +34,7 @@ const Context = ({ children }) => {
 
     const logOut = () => {
         localStorage.removeItem('token')
+        setUserDatabase('')
         return signOut(auth)
     }
 
@@ -53,13 +54,14 @@ const Context = ({ children }) => {
       const userDataFromDb = async (email) => {
         try {
             setDatabaseLoader(true)
-            const res = await axios.get(`http://localhost:5000/users?email=${email}`,{
+            const res = await axios.get(`http://localhost:5000/users/admin?email=${email}`,{
                 headers: {
                     authorization: localStorage.getItem('token')
                 },
             })
 
-            setUserDatabase(res.data.data[0])
+            console.log(res.data.data)
+            setUserDatabase(res.data.data)
             setDatabaseLoader(false)
         } catch (error) {
             console.log(error)
@@ -109,7 +111,7 @@ const Context = ({ children }) => {
     }
 
 console.log(user)
-    const authInfo = { logOut, loginInEmailPassword, singUpEmainPassword, googleLogin, loading, setLoading, user, updateInfo, userDatabase ,databaseLoader}
+    const authInfo = { logOut, loginInEmailPassword, singUpEmainPassword, googleLogin, loading, setLoading, user, updateInfo, userDatabase ,databaseLoader,setUserDatabase}
     return (
         <AuthContex.Provider value={authInfo}>
             {children}

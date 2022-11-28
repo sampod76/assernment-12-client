@@ -98,13 +98,7 @@ export const Routers = createBrowserRouter([
         children: [
             {
                 path: '/deshboard',
-                element: <div className="flex justify-center items-center text-7xl"> <h1>Welcome</h1> </div>
-            },
-
-            {
-                path: '/deshboard/admin',
-                element: <Admin></Admin>,
-
+                element: <DeshBoard></DeshBoard>
             },
             {
                 path: '/deshboard/admin/alluser',

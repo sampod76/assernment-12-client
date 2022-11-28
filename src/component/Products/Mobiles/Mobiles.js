@@ -10,7 +10,7 @@ import toast from 'react-hot-toast';
 
 const Mobiles = ({ mobile }) => {
     const [modelUse, setHandleClose] = useState(true)
-    const { user, userDatabase} = useContext(AuthContex)
+    const { user, userDatabase } = useContext(AuthContex)
     const { _id, name, model, sellarInfo, OfficalPrice, stock, reating, img, useYears } = mobile
 
     const { register, handleSubmit, watch, formState: { errors }, reset } = useForm()
@@ -51,7 +51,7 @@ const Mobiles = ({ mobile }) => {
     const handleWhitestList = () => {
         const AddData = {
             mobileId: _id, name, model, stock, img, useremail: user?.email,
-            paid: false, price: sellarInfo.sellarPrice, username: user?.displayName,bookedConfirm: false
+            paid: false, price: sellarInfo.sellarPrice, username: user?.displayName, bookedConfirm: false
         }
 
         WhiteList(AddData)
@@ -66,12 +66,12 @@ const Mobiles = ({ mobile }) => {
             }).catch(errors => toast.error(errors.message))
     }
 
-   
+
     return (
         <div>
 
-            <div className="card card-side bg-base-100 shadow-xl w-full h-full transition ease-in-out delay-150  hover:-translate-y-1 hover:scale-110  duration-300">
-                <img src={img} alt="Movie" className='md:w-[30%] w-[35%] max-h-52  my-4' />
+            <div className="card card-side bg-base-100 shadow-xl w-full h-full transition ease-in-out delay-150  hover:-translate-y-1 hover:scale-110  duration-300 block lg:flex ">
+                <img src={img} alt="Movie" className=' mx-auto lg:w-48  my-4' />
                 <div className="card-body ">
                     <div className='block md:flex justify-between'>
                         <h2 className="card-title font-semibold md:text-2xl">Band Name: {name}</h2>
@@ -83,12 +83,12 @@ const Mobiles = ({ mobile }) => {
 
                     <div className=' md:text-2xl rounded-lg text-white font-bold p-2 w-full md:flex justify-between'>
                         <div className=' w-fit p-1 rounded'>
-                            {stock === true ? <input type="image" className='w-20' src="https://i.ibb.co/z6sr4np/222222.jpg" alt="" /> : <input type="image" src="https://i.ibb.co/2FbcyL6/oie-mtn0-DYDqfg-BW.png" className='w-20' alt="" /> }
+                            {stock === true ? <input type="image" className='w-20' src="https://i.ibb.co/z6sr4np/222222.jpg" alt="" /> : <input type="image" src="https://i.ibb.co/2FbcyL6/oie-mtn0-DYDqfg-BW.png" className='w-20' alt="" />}
 
                         </div>
                         <div>
                             {
-                                userDatabase?.veryfied ? <h1 className='flex justify-center items-center'><span className='text-black'>Verify:</span><GoVerified className='text-green-600 text-4xl'></GoVerified></h1> : <div><img className='w-11' src='https://i.ibb.co/4NhkSwp/very.png' alt='' /></div>
+                                userDatabase?.verify ? <h1 className='flex justify-center items-center'><span className='text-black'>Verify:</span><GoVerified className='text-green-600 text-4xl'></GoVerified></h1> : <div><img className='w-11' src='https://i.ibb.co/4NhkSwp/very.png' alt='' /></div>
                             }
                         </div>
 
@@ -96,7 +96,14 @@ const Mobiles = ({ mobile }) => {
                     <div className="card-actions flex  justify-between">
                         <Link to={`/catagori/${name}/${_id}`} className="md:btn md:btn-primary  md:text-lg font-bold bg-blue-600 p-1 px-5 rounded w-[30%] text-white text-center ">View</Link>
                         <button onClick={handleWhitestList} className="md:btn md:btn-primary text-lg font-bold bg-blue-600 p-1 rounded  w-[34%] text-white text-center ">whitlist-{'>'}</button>
-                        <label htmlFor="my-modal" className="md:btn md:btn-primary text-lg font-bold bg-blue-600 p-1 rounded w-[30%] text-white text-center">Booking</label>
+
+
+                        {stock === true && <div>
+
+                            <label htmlFor="my-modal" className="md:btn md:btn-primary text-lg font-bold bg-blue-600 p-1 rounded w-[30%] text-white text-center">Booking</label>
+
+                        </div>}
+
 
                     </div>
                 </div>

@@ -11,9 +11,13 @@ const BookData = () => {
     const { user, loading } = useContext(AuthContex)
 
     const { data: bookingData = [], isLoading, refetch } = useQuery({
-        queryKey: ['bookdata'],
+        queryKey: ['bookdata',user?.email],
         queryFn: async () => {
-            const res = await fetch(`http://localhost:5000/booking?email=${user?.email}`)
+            const res = await fetch(`http://localhost:5000/booking?email=${user?.email}`,{
+                headers: {
+                    authorization: localStorage.getItem('token')
+                },
+            })
             const result = await res.json()
             console.log(result);
             if (result.success) {

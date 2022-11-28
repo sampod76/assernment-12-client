@@ -251,6 +251,8 @@ const Register = () => {
                         </form>
                         {errors.image && <span className='text-red-400 font-bold'>This field is required {errors?.image?.message}</span>}
 
+                        <Link to='/login' className='decoration-cyan-700 font-bold underline'>Alrady have an account......</Link>
+
                         <div className='flex gap-4 justify-center'>
                             <Link onClick={handleGoogle}><FcGoogle className='text-4xl'></FcGoogle></Link>
                             <Link ><FaGithubSquare className='text-4xl'></FaGithubSquare></Link>

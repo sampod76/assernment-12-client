@@ -7,10 +7,16 @@ export const uploadeImg = async (image) => {
 
     const img = await fetch(url, {
         method: "POST",
+        headers: {
+            headers: {
+                'content-type': 'application/json',
+                authorization: localStorage.getItem('token')
+            },
+        },
         body: formData
     });
     const imgUrl = await img.json();
-    
+
 
     return imgUrl
 }

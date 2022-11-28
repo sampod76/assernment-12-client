@@ -8,7 +8,7 @@ export const AllSellarFromBd = (url) => {
         queryFn: async () => {
             const res = await fetch(url, {
                 headers: {
-                    'content-type': 'application/json',
+                 
                     authorization: localStorage.getItem('token')
                 },
 
