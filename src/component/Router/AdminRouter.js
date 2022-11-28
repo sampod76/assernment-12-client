@@ -12,7 +12,7 @@ const AdminPrivetRoute = ({ children }) => {
     const [adminData, isAdminData] = useState({})
 
     const adminFound = async () => {
-        const res = await fetch(`http://localhost:5000/users/admin?email=${user?.email}`)
+        const res = await fetch(`https://assernment-12-serverside.vercel.app/users/admin?email=${user?.email}`)
         const result = await res.json()
         return result.data
     }
