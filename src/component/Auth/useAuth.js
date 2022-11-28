@@ -12,7 +12,7 @@ export const jwtTokenCreate = async (email) => {
             'content-type': 'application/json',
             authorization: localStorage.getItem('token')
         },
-        body: JSON.stringify({ email:email })
+        body: JSON.stringify({ email: email })
     })
     const data = await res.json()
     return data
@@ -43,8 +43,8 @@ export const AllusersForAdmin = () => {
     const { data: allusers = [], isLoading, refetch } = useQuery({
         queryKey: ['allusers'],
         queryFn: async () => {
-            const res = await fetch('https://assernment-12-serverside.vercel.app/users',{
-                headers:{
+            const res = await fetch('https://assernment-12-serverside.vercel.app/users', {
+                headers: {
                     authorization: localStorage.getItem('token')
                 }
             })
@@ -225,6 +225,17 @@ export const adsProductsHook = async (id) => {
     return result
 }
 
+
+export const reportMobiles = (PostData) => {
+
+    return fetch('http://localhost:5000/reported', {
+        headers: {
+            authorization: localStorage.getItem('token')
+        },
+    })
+    .then()
+
+}
 
 
 

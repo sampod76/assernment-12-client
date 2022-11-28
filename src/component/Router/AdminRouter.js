@@ -1,15 +1,39 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
+import toast from 'react-hot-toast';
 import { RotatingLines } from 'react-loader-spinner';
 import { Navigate, useLocation } from 'react-router-dom';
 import { AuthContex } from '../Context/Context';
 
 
 const AdminPrivetRoute = ({ children }) => {
-    const { user, loader,databaseLoader,userDatabase } = useContext(AuthContex)
-    
+    const { user, loader } = useContext(AuthContex)
     const location = useLocation()
+    const [isLoading, setIsLoader] = useState(true)
+    const [adminData, isAdminData] = useState({})
 
-    if (loader || databaseLoader) {
+    const adminFound = async () => {
+        const res = await fetch(`http://localhost:5000/users/admin?email=${user?.email}`)
+        const result = await res.json()
+        return result.data
+    }
+
+    useEffect(() => {
+        setIsLoader(true)
+        adminFound()
+            .then(result => {
+                console.log(result)
+                isAdminData(result)
+                setIsLoader(false)
+            })
+            .catch(err => {
+                setIsLoader(false)
+                console.log(err)
+            })
+    }, [user?.email])
+
+ 
+
+    if (loader || isLoading) {
         // console.log('first')
         return <div className='flex justify-center items-center'>
             <RotatingLines
@@ -23,7 +47,8 @@ const AdminPrivetRoute = ({ children }) => {
 
     }
 
-    if (user?.uid && userDatabase.role ==='admin') {
+  
+    if (adminData.role =='admin') {
         return children
     }
 

@@ -1,6 +1,7 @@
 import Admin from "../DeshBoard/Admin/Admin";
 import AllSellar from "../DeshBoard/Admin/AllSellar";
 import Allusers from "../DeshBoard/Admin/Allusers";
+import ReportedItem from "../DeshBoard/Admin/ReportedItem";
 import DeshBoardLayout from "../DeshBoard/DeshBoardLayout";
 import DeshBoard from "../DeshBoard/DeshBoardLayout";
 import AddProducts from "../DeshBoard/Saller/AddProducts";
@@ -94,12 +95,9 @@ export const Routers = createBrowserRouter([
     // AdminPrivetRoute
     {
         path: '/deshboard',
-        element: <PrivetRouter><DeshBoardLayout></DeshBoardLayout></PrivetRouter> ,
+        element: <PrivetRouter> <AdminPrivetRoute><DeshBoardLayout></DeshBoardLayout></AdminPrivetRoute></PrivetRouter> ,
         children: [
-            {
-                path: '/deshboard',
-                element: <DeshBoard></DeshBoard>
-            },
+          
             {
                 path: '/deshboard/admin/alluser',
                 element:<AdminPrivetRoute> <Allusers></Allusers></AdminPrivetRoute>
@@ -110,7 +108,7 @@ export const Routers = createBrowserRouter([
             },
             {
                 path: '/deshboard/admin/reporteditem',
-                // element: <
+                element:<ReportedItem></ReportedItem>
             },
             {
                 path: '/deshboard/saller',

@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import toast from 'react-hot-toast';
 import { ThreeCircles } from 'react-loader-spinner';
 import { Link, useNavigate } from 'react-router-dom';
-import { bookingListDeletd, singleMobile } from '../Auth/useAuth';
+import { bookingListDeletd, reportMobiles, singleMobile } from '../Auth/useAuth';
 
 const BookCard = ({ data, refetch }) => {
     const [loading, setLoadings] = useState(true)
@@ -10,14 +10,14 @@ const BookCard = ({ data, refetch }) => {
 
     const [mobileData, setMobileData] = useState({})
     const { _id, mobileId, userNumber, userLocation, useremail } = data
-    console.log(data);
+    // console.log(data);
 
 
 
     const { model, sellarInfo, stock, img, } = mobileData
     // console.log(sellarInfo?.sellarPrice);
 
-    console.log(mobileData)
+    // console.log(mobileData)
 
     // get single mobile data from all mobile database 
     const getMobile = () => {
@@ -28,7 +28,7 @@ const BookCard = ({ data, refetch }) => {
                 if (result.success) {
 
                     setMobileData(result.data)
-                    console.log(result.data)
+
                     setLoadings(false)
                 } else {
                     console.log(result.message)
@@ -39,6 +39,7 @@ const BookCard = ({ data, refetch }) => {
     }
 
     useEffect(() => {
+
         getMobile()
     }, [])
 
@@ -48,7 +49,7 @@ const BookCard = ({ data, refetch }) => {
         bookingListDeletd(_id)
             .then(res => res.json())
             .then(result => {
-                console.log(result);
+
                 if (result.success) {
                     toast.success(result.message)
                     refetch()
@@ -56,6 +57,43 @@ const BookCard = ({ data, refetch }) => {
                     toast.error(data.message)
                 }
             }).catch(err => toast.error(err.message))
+    }
+
+    const handleRepord = async () => {
+        const datas = {
+            mobileId, model, img, sellarInfo, useremail
+        }
+        console.log(datas)
+
+        const res = await fetch('http://localhost:5000/reported', {
+            method: 'POST',
+            headers: {
+                'content-type': 'application/json',
+                authorization: localStorage.getItem('token')
+            },
+            body: JSON.stringify(datas)
+        })
+        const result = await res.json()
+
+        if (result.success) {
+            toast.success('report successfull')
+        } else {
+            toast.error(result.message)
+        }
+      
+
+        // .then(res => res.json())
+        // .then(result => {
+        //     if (result.success) {
+        //         toast.success(result.message)
+        //     } else {
+        //         toast.error(result.message)
+        //     }
+        // })
+        // .catch(err => {
+        //     console.log(err);
+        //     toast.error(err.message)
+        // })
     }
 
     // console.log(sellarInfo)
@@ -115,13 +153,16 @@ const BookCard = ({ data, refetch }) => {
 
                                 {/* {
                                     stock ? <> */}
-                                        <button onClick={handleCancleBooking} className="md:btn md:btn-primary md:text-lg font-bold bg-blue-600 p-1 rounded  text-white text-center mx-2 ">
-                                            Cancle
-                                        </button>
-                                        <Link to={`/payment/${_id}`} className="md:btn md:btn-primary md:text-lg font-bold bg-blue-600 p-1 rounded  text-white text-center ">
-                                            Payment
-                                        </Link>
-                                    {/* </>
+                                <button onClick={handleRepord} className="md:btn md:btn-primary md:text-lg font-bold bg-blue-600 p-1 rounded  text-white text-center mx-2 ">
+                                    Peport
+                                </button>
+                                <button onClick={handleCancleBooking} className="md:btn md:btn-primary md:text-lg font-bold bg-blue-600 p-1 rounded  text-white text-center mx-2 ">
+                                    Cancle
+                                </button>
+                                <Link to={`/payment/${_id}`} className="md:btn md:btn-primary md:text-lg font-bold bg-blue-600 p-1 rounded  text-white text-center ">
+                                    Payment
+                                </Link>
+                                {/* </>
                                         : <button className='btn btn-active btn-accent '>Alrady  purchased</button>
                                 } */}
                             </div>
