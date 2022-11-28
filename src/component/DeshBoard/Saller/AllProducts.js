@@ -15,7 +15,7 @@ const AllProducts = () => {
     const { data: allMobiels = [], isLoading, refetch } = useQuery({
         queryKey: ['allselerproduct'],
         queryFn: async () => {
-            const res = await fetch(`http://localhost:5000/mobiles?email=${user?.email}`)
+            const res = await fetch(`https://assernment-12-serverside.vercel.app/mobiles?email=${user?.email}`)
             const result = await res.json()
             if (result.success) {
                 toast.success(`this ${user.email} all mobiles get`)

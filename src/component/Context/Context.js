@@ -54,7 +54,7 @@ const Context = ({ children }) => {
       const userDataFromDb = async (email) => {
         try {
             setDatabaseLoader(true)
-            const res = await axios.get(`http://localhost:5000/users/admin?email=${email}`,{
+            const res = await axios.get(`https://assernment-12-serverside.vercel.app/users/admin?email=${email}`,{
                 headers: {
                     authorization: localStorage.getItem('token')
                 },

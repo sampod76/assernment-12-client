@@ -21,7 +21,7 @@ const ChackoutForm = ({ bookingData }) => {
 
     useEffect(() => {
         // Create PaymentIntent as soon as the page loads /
-        fetch("http://localhost:5000/create-payment-intent", {
+        fetch("https://assernment-12-serverside.vercel.app/create-payment-intent", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
@@ -114,7 +114,7 @@ const ChackoutForm = ({ bookingData }) => {
 
             // store payment info in the database 
 
-            fetch('http://localhost:5000/payments', {
+            fetch('https://assernment-12-serverside.vercel.app/payments', {
                 method: 'POST',
                 headers: {
                     'content-type': 'application/json',

@@ -30,7 +30,7 @@ const Mobiles = ({ mobile }) => {
                     toast.success(result.message + 'booooooooo')
 
                     // const updateInfo ={email:user.email, }
-                    // fetch('http://localhost:5000/updateMobile',{
+                    // fetch('https://assernment-12-serverside.vercel.app/updateMobile',{
                     //     method:'PUT',
                     //     headers: {
                     //         'content-type': 'application/json'

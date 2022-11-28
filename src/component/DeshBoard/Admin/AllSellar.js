@@ -5,10 +5,10 @@ import { ColorRing } from 'react-loader-spinner';
 import { AllSellarFromBd, deleteDataHook, verifySellar, verifySellarHook } from '../../Auth/useUnivercelHook';
 
 const AllSellar = () => {
-    const { allDatasArray, isLoading, refetch } = AllSellarFromBd(`http://localhost:5000/users?role=sellar`)
+    const { allDatasArray, isLoading, refetch } = AllSellarFromBd(`https://assernment-12-serverside.vercel.app/users?role=sellar`)
 
     const handleDeleteSellar = (id) => {
-        deleteDataHook(`http://localhost:5000/users/${id}`)
+        deleteDataHook(`https://assernment-12-serverside.vercel.app/users/${id}`)
             .then(result => {
                 if (result.success) {
                     toast.success(result.message)
@@ -26,7 +26,7 @@ const AllSellar = () => {
     const handleVeryfiy = (id) => {
         console.log(id);
       
-        verifySellarHook(`http://localhost:5000/updateuser/${id}`)
+        verifySellarHook(`https://assernment-12-serverside.vercel.app/updateuser/${id}`)
             .then(result => {
                 if (result.success) {
                     toast.success(result.message)

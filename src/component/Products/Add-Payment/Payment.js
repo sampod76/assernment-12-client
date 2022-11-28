@@ -17,7 +17,7 @@ const Payment = () => {
     const { data: bookingData = {}, isLoading, refetch } = useQuery({
         queryKey: ['bookingData'],
         queryFn: async () => {
-            const res = await fetch(`http://localhost:5000/booking/${id}`,{
+            const res = await fetch(`https://assernment-12-serverside.vercel.app/booking/${id}`,{
                 headers: {
                     authorization: localStorage.getItem('token')
                 },

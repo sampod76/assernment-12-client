@@ -13,7 +13,7 @@ const BookData = () => {
     const { data: bookingData = [], isLoading, refetch } = useQuery({
         queryKey: ['bookdata',user?.email],
         queryFn: async () => {
-            const res = await fetch(`http://localhost:5000/booking?email=${user?.email}`,{
+            const res = await fetch(`https://assernment-12-serverside.vercel.app/booking?email=${user?.email}`,{
                 headers: {
                     authorization: localStorage.getItem('token')
                 },

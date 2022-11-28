@@ -9,7 +9,7 @@ const ADSproductHome = () => {
     const { data: adsProducts = [], isLoading, refetch } = useQuery({
         queryKey: ['adsproducts'],
         queryFn: async () => {
-            const res = await fetch(`http://localhost:5000/mobiles/ads`, {
+            const res = await fetch(`https://assernment-12-serverside.vercel.app/mobiles/ads`, {
                 headers: {
                  
                     authorization: localStorage.getItem('token')

@@ -6,7 +6,7 @@ import { useQuery } from 'react-query'
 // const url = 
 
 export const jwtTokenCreate = async (email) => {
-    const res = await fetch(`http://localhost:5000/jwt`, {
+    const res = await fetch(`https://assernment-12-serverside.vercel.app/jwt`, {
         method: 'POST',
         headers: {
             'content-type': 'application/json',
@@ -21,7 +21,7 @@ export const jwtTokenCreate = async (email) => {
 
 export const PostUser = async (userInfo) => {
 
-    const res = await fetch('http://localhost:5000/users', {
+    const res = await fetch('https://assernment-12-serverside.vercel.app/users', {
         method: 'POST',
         headers: {
             'content-type': 'application/json',
@@ -43,7 +43,7 @@ export const AllusersForAdmin = () => {
     const { data: allusers = [], isLoading, refetch } = useQuery({
         queryKey: ['allusers'],
         queryFn: async () => {
-            const res = await fetch('http://localhost:5000/users',{
+            const res = await fetch('https://assernment-12-serverside.vercel.app/users',{
                 headers:{
                     authorization: localStorage.getItem('token')
                 }
@@ -74,7 +74,7 @@ export const AllusersForAdmin = () => {
 // gat all mobile 
 
 export const allMobiels = async () => {
-    const res = await axios.get(`http://localhost:5000/mobiles`, {
+    const res = await axios.get(`https://assernment-12-serverside.vercel.app/mobiles`, {
         headers: {
             authorization: localStorage.getItem('token')
         }
@@ -87,7 +87,7 @@ export const allMobiels = async () => {
 
 // delete single mobile 
 export const deleteMobileById = async (id) => {
-    const res = await fetch(`http://localhost:5000/mobiles/${id}`, {
+    const res = await fetch(`https://assernment-12-serverside.vercel.app/mobiles/${id}`, {
         method: 'DELETE',
         headers: {
             authorization: localStorage.getItem('token')
@@ -101,7 +101,7 @@ export const deleteMobileById = async (id) => {
 //create single mobile 
 
 export const createOrAddProduct = async (mobileData) => {
-    const res = await fetch('http://localhost:5000/mobiles', {
+    const res = await fetch('https://assernment-12-serverside.vercel.app/mobiles', {
         method: 'POST',
         headers: {
             'content-type': 'application/json',
@@ -118,7 +118,7 @@ export const createOrAddProduct = async (mobileData) => {
 
 //update mobile 
 export const updateMobileDatas = async (id, data) => {
-    const res = await fetch(`http://localhost:5000/mobiles/${id}`, {
+    const res = await fetch(`https://assernment-12-serverside.vercel.app/mobiles/${id}`, {
         method: 'PUT',
         headers: {
             'content-type': 'application/json',
@@ -132,7 +132,7 @@ export const updateMobileDatas = async (id, data) => {
 }
 
 export const catagoriMobiel = async (bandname) => {
-    const res = await axios.get(`http://localhost:5000/mobiles?catagori=${bandname}`, {
+    const res = await axios.get(`https://assernment-12-serverside.vercel.app/mobiles?catagori=${bandname}`, {
         headers: {
             authorization: localStorage.getItem('token')
         }
@@ -142,7 +142,7 @@ export const catagoriMobiel = async (bandname) => {
 }
 
 export const singleMobile = async (id) => {
-    const res = await axios.get(`http://localhost:5000/mobiles/${id}`, {
+    const res = await axios.get(`https://assernment-12-serverside.vercel.app/mobiles/${id}`, {
         headers: {
             authorization: localStorage.getItem('token')
         }
@@ -155,7 +155,7 @@ export const singleMobile = async (id) => {
 
 export const BookingMobile = (PostData) => {
 
-    return fetch('http://localhost:5000/booking', {
+    return fetch('https://assernment-12-serverside.vercel.app/booking', {
         method: 'POST',
         headers: {
             'content-type': 'application/json',
@@ -169,7 +169,7 @@ export const BookingMobile = (PostData) => {
 // booing Update
 export const bookingUpdateMobile = (id) => {
 
-    return fetch(`http://localhost:5000/booking/${id}`, {
+    return fetch(`https://assernment-12-serverside.vercel.app/booking/${id}`, {
         method: 'PATCH',
         headers: {
             'content-type': 'application/json',
@@ -182,7 +182,7 @@ export const bookingUpdateMobile = (id) => {
 
 export const WhiteList = (PostData) => {
 
-    return fetch('http://localhost:5000/whitelist', {
+    return fetch('https://assernment-12-serverside.vercel.app/whitelist', {
         method: 'POST',
         headers: {
             'content-type': 'application/json',
@@ -194,7 +194,7 @@ export const WhiteList = (PostData) => {
 }
 
 export const whiteListDeletd = (id) => {
-    return fetch(`http://localhost:5000/whitelist/${id}`, {
+    return fetch(`https://assernment-12-serverside.vercel.app/whitelist/${id}`, {
         method: 'DELETE',
         headers: {
             authorization: localStorage.getItem('token')
@@ -203,7 +203,7 @@ export const whiteListDeletd = (id) => {
     })
 }
 export const bookingListDeletd = (id) => {
-    return fetch(`http://localhost:5000/booking/${id}`, {
+    return fetch(`https://assernment-12-serverside.vercel.app/booking/${id}`, {
         method: 'DELETE',
         headers: {
 
@@ -214,7 +214,7 @@ export const bookingListDeletd = (id) => {
 }
 
 export const adsProductsHook = async (id) => {
-    const res = await fetch(`http://localhost:5000/adsproducts/${id}`, {
+    const res = await fetch(`https://assernment-12-serverside.vercel.app/adsproducts/${id}`, {
         method: 'POST',
         headers: {
             'content-type': 'application/json',
