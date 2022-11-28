@@ -28,8 +28,9 @@ const ReportedItem = () => {
     console.log(allDatasArray)
     return (
         <div>
-            <h1>sjdkfjsdj</h1>
-            <h1>{allDatasArray.length}</h1>
+           {
+            allDatasArray.map(data=> <div className='bg-red-500 text-2xl my-2'>report intem {data.modal}</div>)
+           }
         </div>
     );
 };
