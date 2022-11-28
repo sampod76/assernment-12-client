@@ -12,7 +12,7 @@ export const jwtTokenCreate = async (email) => {
             'content-type': 'application/json',
             authorization: localStorage.getItem('token')
         },
-        body: JSON.stringify({ email })
+        body: JSON.stringify({ email:email })
     })
     const data = await res.json()
     return data

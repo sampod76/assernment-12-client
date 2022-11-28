@@ -113,17 +113,17 @@ const BookCard = ({ data, refetch }) => {
 
 
 
-                                {
-                                    stock ? <>
+                                {/* {
+                                    stock ? <> */}
                                         <button onClick={handleCancleBooking} className="md:btn md:btn-primary md:text-lg font-bold bg-blue-600 p-1 rounded  text-white text-center mx-2 ">
                                             Cancle
                                         </button>
                                         <Link to={`/payment/${_id}`} className="md:btn md:btn-primary md:text-lg font-bold bg-blue-600 p-1 rounded  text-white text-center ">
                                             Payment
                                         </Link>
-                                    </>
+                                    {/* </>
                                         : <button className='btn btn-active btn-accent '>Alrady  purchased</button>
-                                }
+                                } */}
                             </div>
 
 
