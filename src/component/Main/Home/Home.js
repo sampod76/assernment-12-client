@@ -43,8 +43,8 @@ const Home = () => {
     if (loadingMobiles) {
         return <div className='flex justify-center items-center min-h-screen'>
             <ThreeCircles
-                height="200"
-                width="200"
+                height="100"
+                width="100"
                 color="#4fa94d"
                 wrapperStyle={{}}
                 wrapperclass=""
@@ -75,11 +75,13 @@ const Home = () => {
                     slider
                 }
             </div> */}
-            <div className='grid grid-cols-1 md:grid-cols-2 gap-5'>
+            <div className='grid grid-cols-1 md:grid-cols-2 gap-1 md:gap-5'>
                 {
                     mobiels?.map(mobile => <Mobiles key={mobile._id} mobile={mobile}></Mobiles>)
                 }
             </div>
+
+          
         </div>
     );
 };

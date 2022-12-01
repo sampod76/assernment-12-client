@@ -13,7 +13,7 @@ function App() {
 
 
   return (
-    <div className=''>
+    <div data-aos="fade-up-right" className=''>
 
       <RouterProvider router={Routers} >
 

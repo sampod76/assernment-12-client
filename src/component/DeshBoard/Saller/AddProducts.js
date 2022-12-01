@@ -9,30 +9,30 @@ const AddProducts = () => {
     const { user, userDatabase } = useContext(AuthContex)
     const { register, handleSubmit, watch, formState: { errors }, reset } = useForm()
     const onSubmit = data => {
-        const { sellarname, sellarNumber, sellarEmail, sellarLoaction, useYears, name, OfficalPrice, sellarPrice, accessories, description, image } = data
+        const { sellarname, sellarNumber, sellarEmail, sellarLoaction, useYears, name, OfficalPrice, sellarPrice, accessories, description, img } = data
         const sellarInfo = { sellarname, sellarNumber, sellarEmail, sellarLoaction, sellarPrice, }
         // console.log(data)
-        uploadeImg(image)
+        // uploadeImg(image)
+        //     .then(result => {
+        //         if (result.success && result.status) {
+        //             toast.success('image uploade')
+        const mobileData = { paid: false, name, OfficalPrice, accessories, description, img, useYears, sellarInfo, stock: true, ads: false }
+        createOrAddProduct(mobileData)
             .then(result => {
-                if (result.success && result.status) {
-                    toast.success('image uploade')
-                    const mobileData = { paid: false, name, OfficalPrice, accessories, description, img: result?.data?.display_url, useYears, sellarInfo, stock: true, ads: false }
-                    createOrAddProduct(mobileData)
-                        .then(result => {
-                            if (result.success) {
-                                toast.success('Successfilly add mobile')
-                                reset()
-                            } else {
-                                toast.error('mobile data not create')
-                            }
-                        })
-                        .catch(err => toast.error(err.message))
-
+                if (result.success) {
+                    toast.success('Successfilly add mobile')
+                    reset()
                 } else {
-                    toast.error(result.status)
+                    toast.error('mobile data not create')
                 }
             })
             .catch(err => toast.error(err.message))
+
+        //     } else {
+        //         toast.error(result.status)
+        //     }
+        // })
+        // .catch(err => toast.error(err.message))
 
     }
     console.log(userDatabase)
@@ -100,14 +100,14 @@ const AddProducts = () => {
                                 </div>
 
                                 <div className="col-span-full sm:col-span-2">
-                                    <label htmlFor="img" className="text-sm">Image Upload</label>
-                                    <input {...register('image', { required: 'image mast be provide' })}
-                                        accept='image/*'
-                                        type="file"
-                                        id="img"
-                                        alt=""
-                                        className="w-full p-3 rounded-md focus:ring focus:ring-opacity-75 focus:ring-violet-400 dark:border-gray-700 dark:text-gray-900" /> <br />
-
+                                    <label htmlFor="img" className="text-sm">Image Upload /দুঃখিত সরাসরি ফাইল আপলোড করার সিস্টেম টি একটি Cors  পলিসির কারণে দেওয়া যাচ্ছে না</label>
+                                    {/* <input {...register('image', { required: 'image mast be provide' })}
+                                    accept='image/*'
+                                    type="file"
+                                    id="img"
+                                    alt=""
+                                        className="w-full p-3 rounded-md focus:ring focus:ring-opacity-75 focus:ring-violet-400 dark:border-gray-700 dark:text-gray-900" /> <br /> */}
+                                    <input className='p-2 rounded-lg' {...register('img', { required: 'image mast be provide' })} type="url" placeholder='Photo Url' id="" />
                                 </div>
 
 

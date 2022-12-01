@@ -4,6 +4,7 @@ import header from '../Main/Main.css'
 import { Link, Outlet } from 'react-router-dom';
 import Footer from '../Shared/Footer/Footer';
 import { AuthContex } from '../Context/Context';
+import DashBoard from './DashBoard';
 const DeshBoardLayout = () => {
     const { userDatabase } = useContext(AuthContex)
     // console.log(userDatabase);
@@ -13,6 +14,7 @@ console.log(userDatabase)
             <div className='header p-2'>
 
                 <Header></Header>
+
             </div>
             <div className="drawer drawer-mobile container mx-auto shadow-2xl">
                 <input id="drawer-toggle" type="checkbox" className="drawer-toggle" />
@@ -51,9 +53,7 @@ console.log(userDatabase)
 
                 </div>
             </div>
-            {/* <div className='min-h-screen'>
-                <Outlet></Outlet>
-            </div> */}
+          
             <div className=''>
 
                 <Footer></Footer>

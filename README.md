@@ -1,6 +1,6 @@
 
 client side :
-https://lustrous-hamster-e1af7a.netlify.app/
+https://trustshopebd.netlify.app/
 
 
 git hub client side:

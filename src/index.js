@@ -6,7 +6,10 @@ import reportWebVitals from './reportWebVitals';
 import Context from './component/Context/Context';
 import toast, { Toaster } from 'react-hot-toast';
 import { QueryClient, QueryClientProvider, useQuery } from 'react-query'
-
+import AOS from 'aos';
+import 'aos/dist/aos.css'; // You can also use <link> for styles
+// ..
+AOS.init();
 const queryClient = new QueryClient()
 
 

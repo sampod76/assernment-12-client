@@ -35,8 +35,8 @@ const Payment = () => {
     if (isLoading) {
         return <div className='flex justify-center items-center min-h-screen'>
             <ThreeCircles
-                height="200"
-                width="200"
+                height="100"
+                width="100"
                 color="#4fa94d"
                 wrapperStyle={{}}
                 wrapperclass=""

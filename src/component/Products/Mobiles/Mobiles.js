@@ -68,49 +68,54 @@ const Mobiles = ({ mobile }) => {
 
 
     return (
-        <div>
+        <div >
 
-            <div className="card card-side bg-base-100 shadow-xl w-full h-full transition ease-in-out delay-150  hover:-translate-y-1 hover:scale-110  duration-300 block lg:flex ">
-                <img src={img} alt="Movie" className=' mx-auto lg:w-48  my-4' />
-                <div className="card-body ">
-                    <div className='block md:flex justify-between'>
-                        <h2 className="card-title font-semibold md:text-2xl">Band Name: {name}</h2>
-                        <h2 className="card-title font-semibold border-4 rounded-lg p-1 hover:border-red-600">Price: {sellarInfo?.sellarPrice}tk</h2>
-
-                    </div>
-                    <p className='md:text-lg font-bold'>Model:{model}</p>
+            <section data-aos="flip-left" >
 
 
-                    <div className=' md:text-2xl rounded-lg text-white font-bold p-2 w-full md:flex justify-between'>
-                        <div className=' w-fit p-1 rounded'>
-                            {stock === true ? <input type="image" className='w-20' src="https://i.ibb.co/z6sr4np/222222.jpg" alt="" /> : <input type="image" src="https://i.ibb.co/2FbcyL6/oie-mtn0-DYDqfg-BW.png" className='w-20' alt="" />}
+                <div className="card card-side bg-base-100 shadow-xl w-full  border-2   h-full transition ease-in-out delay-150  hover:-translate-y-1 hover:scale-110  duration-300 block lg:flex  ">
+                    <img src={img} alt="Movie" className=' mx-auto lg:w-48 md:h-60 w-1/2 h-1/4 my-4' />
+                    <div className="card-body ">
+                        <div className='block md:flex justify-between'>
+                            <h2 className="card-title font-semibold md:text-2xl">Band Name: {name}</h2>
+                            <h2 className="card-title font-semibold border-4 rounded-lg p-1 hover:border-red-600">Price: {sellarInfo?.sellarPrice}tk</h2>
 
                         </div>
-                        <div>
-                            {
-                                userDatabase?.verify ? <h1 className='flex justify-center items-center'><span className='text-black'>Verify:</span><GoVerified className='text-green-600 text-4xl'></GoVerified></h1> : <div><img className='w-11' src='https://i.ibb.co/4NhkSwp/very.png' alt='' /></div>
-                            }
+                        <p className='md:text-lg font-bold'>Model:{model}</p>
+
+
+                        <div className=' md:text-2xl rounded-lg text-white font-bold p-2 w-full md:flex justify-between'>
+                            <div className=' w-fit p-1 rounded'>
+                                {stock === true ? <input type="image" className='w-20' src="https://i.ibb.co/z6sr4np/222222.jpg" alt="" /> : <input type="image" src="https://i.ibb.co/2FbcyL6/oie-mtn0-DYDqfg-BW.png" className='w-20' alt="" />}
+
+                            </div>
+                            <div>
+                                {
+                                    userDatabase?.verify ? <h1 className='flex justify-center items-center'><span className='text-black'>Verify:</span><GoVerified className='text-green-600 text-4xl'></GoVerified></h1> : <div><img className='w-11' src='https://i.ibb.co/4NhkSwp/very.png' alt='' /></div>
+                                }
+                            </div>
+
                         </div>
+                        <div className="card-actions flex  justify-between">
+                            <Link to={`/catagori/${name}/${_id}`} className="md:btn md:btn-primary  md:text-lg font-bold bg-blue-600 p-1 px-5 rounded  text-white text-center ">View</Link>
+                            <button onClick={handleWhitestList} className="md:btn md:btn-primary text-lg font-bold bg-blue-600 p-1 rounded   text-white text-center ">whitlist-{'>'}</button>
 
+
+                            {stock === true ? 
+
+                                <label htmlFor="my-modal" className="md:btn md:btn-primary text-lg font-bold bg-blue-600 p-1 rounded  text-white text-center">Booking</label>:
+                                <button  disabled className="text-lg font-bold bg-gray-700 p-1 rounded  text-white text-center">Soldout</button>
+
+                           }
+
+
+                        </div>
                     </div>
-                    <div className="card-actions flex  justify-between">
-                        <Link to={`/catagori/${name}/${_id}`} className="md:btn md:btn-primary  md:text-lg font-bold bg-blue-600 p-1 px-5 rounded w-[30%] text-white text-center ">View</Link>
-                        <button onClick={handleWhitestList} className="md:btn md:btn-primary text-lg font-bold bg-blue-600 p-1 rounded  w-[34%] text-white text-center ">whitlist-{'>'}</button>
-
-
-                        {stock === true && <div>
-
-                            <label htmlFor="my-modal" className="md:btn md:btn-primary text-lg font-bold bg-blue-600 p-1 rounded w-[30%] text-white text-center">Booking</label>
-
-                        </div>}
-
+                    <div>
 
                     </div>
                 </div>
-                <div>
-
-                </div>
-            </div>
+            </section>
 
             {/* The button to open modal */}
 

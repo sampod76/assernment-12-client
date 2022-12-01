@@ -2,8 +2,9 @@ import Admin from "../DeshBoard/Admin/Admin";
 import AllSellar from "../DeshBoard/Admin/AllSellar";
 import Allusers from "../DeshBoard/Admin/Allusers";
 import ReportedItem from "../DeshBoard/Admin/ReportedItem";
+import DashBoard from "../DeshBoard/DashBoard";
 import DeshBoardLayout from "../DeshBoard/DeshBoardLayout";
-import DeshBoard from "../DeshBoard/DeshBoardLayout";
+
 import AddProducts from "../DeshBoard/Saller/AddProducts";
 import AllProducts from "../DeshBoard/Saller/AllProducts";
 import Saller from "../DeshBoard/Saller/Saller";
@@ -37,11 +38,11 @@ export const Routers = createBrowserRouter([
         children: [
             {
                 path: '/',
-                element:<ADSproductHome></ADSproductHome>
+                element: <ADSproductHome></ADSproductHome>
             },
             {
                 path: '/home',
-                element:<ADSproductHome></ADSproductHome>
+                element: <ADSproductHome></ADSproductHome>
             },
             {
                 path: '/allMobiles',
@@ -95,20 +96,23 @@ export const Routers = createBrowserRouter([
     // AdminPrivetRoute
     {
         path: '/deshboard',
-        element: <PrivetRouter> <AdminPrivetRoute><DeshBoardLayout></DeshBoardLayout></AdminPrivetRoute></PrivetRouter> ,
+        element: <PrivetRouter> <DeshBoardLayout></DeshBoardLayout></PrivetRouter>,
         children: [
-          
+            {
+                path: '/deshboard',
+                element: <DashBoard></DashBoard>
+            },
             {
                 path: '/deshboard/admin/alluser',
-                element:<AdminPrivetRoute> <Allusers></Allusers></AdminPrivetRoute>
+                element: <AdminPrivetRoute> <Allusers></Allusers></AdminPrivetRoute>
             },
             {
                 path: '/deshboard/admin/allsaller',
-                element:<AdminPrivetRoute><AllSellar></AllSellar></AdminPrivetRoute> 
+                element: <AdminPrivetRoute><AllSellar></AllSellar></AdminPrivetRoute>
             },
             {
                 path: '/deshboard/admin/reporteditem',
-                element:<ReportedItem></ReportedItem>
+                element: <ReportedItem></ReportedItem>
             },
             {
                 path: '/deshboard/saller',
