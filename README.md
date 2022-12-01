@@ -5,11 +5,10 @@ https://trustshopebd.netlify.app/
 
 git hub client side:
 
-https://github.com/programming-hero-web-course-4/b612-used-products-resale-clients-side-sampod76
+https://github.com/sampod76/treast-shope12
 
 
 github serverside:
 
-https://github.com/programming-hero-web-course-4/b612-used-products-resale-server-side-sampod76
-
+https://github.com/sampod76/trustmobile-serverside
 
