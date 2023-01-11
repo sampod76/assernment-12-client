@@ -58,23 +58,12 @@ const Home = () => {
     }
 
     // // console.log(sellarInfo)
-    const slider = (
-        <AwesomeSlider cssModule={styles}>
-            <div data-src="https://www.bdstall.com/asset/product-image/giant_171825.jpg" />
-            <div data-src="https://www.bdstall.com/asset/product-image/giant_157232.jpg" />
-            <div data-src="https://www.bdstall.com/asset/product-image/giant_139173.jpg" />
-        </AwesomeSlider>
-    );
+  
     return (
         <div className='min-h-screen mt-4 '>
 
             <BandNameCatagori></BandNameCatagori>
 
-            {/* <div>
-                {
-                    slider
-                }
-            </div> */}
             <div className='grid grid-cols-1 md:grid-cols-2 gap-1 md:gap-5'>
                 {
                     mobiels?.map(mobile => <Mobiles key={mobile._id} mobile={mobile}></Mobiles>)

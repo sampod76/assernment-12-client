@@ -7,27 +7,23 @@ import { AuthContex } from '../Context/Context';
 import WhitlistCard from './WhitlistCard';
 
 const WhiteListComponent = () => {
-    const { user } = useContext(AuthContex)
+    const { user, setWhitelist } = useContext(AuthContex)
 
     // const [whiteListData, setWhiteListData] = useContext([])
-
-
-
-    console.log(user);
-
 
     const { data: whiteListData = [], isLoading, refetch } = useQuery({
         queryKey: ['whitelist'],
         queryFn: async () => {
-            const res = await fetch(`https://assernment-12-serverside.vercel.app/whitelist?email=${user?.email}`,{
-                headers:{
+            const res = await fetch(`https://assernment-12-serverside.vercel.app/whitelist?email=${user?.email}`, {
+                headers: {
                     authorization: localStorage.getItem('token')
                 }
             })
             const result = await res.json()
 
             if (result.success) {
-                console.log(result);
+                localStorage.setItem('whitelist', JSON.stringify({ userEamil: user?.email, whitelistNumber: result.data.length }))
+                setWhitelist(result.data.length)
                 return result.data
 
             } else {
@@ -37,7 +33,7 @@ const WhiteListComponent = () => {
     })
 
 
- 
+
 
 
     if (isLoading) {

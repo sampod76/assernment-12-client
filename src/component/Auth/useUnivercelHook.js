@@ -45,14 +45,15 @@ export const deleteDataHook = async (url) => {
 
 }
 
-export const verifySellarHook =async(url)=>{
+export const verifySellarHook =async(url,data)=>{
+    console.log('condition',data);
     const res = await fetch(url,{
         method:'PUT',
         headers: {
             'content-type': 'application/json',
             authorization: localStorage.getItem('token')
         },
-        
+        body:JSON.stringify({data})
     })
     const result =await res.json()
 

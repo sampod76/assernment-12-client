@@ -1,6 +1,6 @@
 import { useContext, useState } from 'react';
 import { FaGithubSquare } from 'react-icons/fa';
-
+import { AiFillEyeInvisible, AiFillEye } from "react-icons/ai";
 import { FcGoogle } from 'react-icons/fc';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { AuthContex } from '../../Context/Context';
@@ -13,6 +13,7 @@ import { PostUser } from '../../Auth/useAuth';
 
 const Register = () => {
     const { singUpEmainPassword, googleLogin, loading, setLoading, updateInfo, logOut, user, userDatabase } = useContext(AuthContex)
+    const [passwordShow, setPasswordShow] = useState(false)
 
     const [userImg, setUserImg] = useState("")
     const { register, handleSubmit, watch, formState: { errors }, reset } = useForm()
@@ -24,8 +25,6 @@ const Register = () => {
     // console.log(users)
     const onSubmit = data => {
         const { password, email, name, image, role } = data
-
-
 
         console.log(data)
 
@@ -200,18 +199,18 @@ const Register = () => {
                                                     <path fillRule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z"
                                                         clipRule="evenodd" />
                                                 </svg>
-                                                <input {...register('name', { required: true })} className="pl-2 w-full outline-none bg-slate-100 rounded-lg p-2  border-none" type="text" name="name" id="name" placeholder="Full name" /><br />
+                                                <input {...register('name', { required: true })} className="pl-2 w-full outline-none rounded-lg p-2  border-none" type="text" name="name" id="name" placeholder="Full name" /><br />
                                             </div>
 
-                                            <div className="flex items-center border-2 py-2 px-3 rounded-2xl mb-4">
+                                            <div className="flex items-center border-2 py-2 px-3 rounded-2xl mb-4 focus:bg-white">
                                                 <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-gray-400" fill="none"
                                                     viewBox="0 0 24 24" stroke="currentColor">
                                                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2"
                                                         d="M16 12a4 4 0 10-8 0 4 4 0 008 0zm0 0v1.5a2.5 2.5 0 005 0V12a9 9 0 10-9 9m4.5-1.206a8.959 8.959 0 01-4.5 1.207" />
                                                 </svg>
-                                                <input className="pl-2 outline-none border-none" {...register('email', { required: true })} type="email" name="email" id="" placeholder="Email Address" /><br />
+                                                <input className="pl-2 w-full outline-none rounded-lg p-2  border-none" {...register('email', { required: true })} type="email" name="email" id="" placeholder="Email Address" /><br />
                                             </div>
-                                            {errors.email && <span>This field is required {errors.message}</span>}
+                                            {errors.email && <span className='text-red-400'>This field is required {errors.message}</span>}
                                             <div className="flex items-center border-2 py-2 px-3 rounded-2xl">
                                                 <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-gray-400" viewBox="0 0 20 20"
                                                     fill="currentColor">
@@ -219,9 +218,18 @@ const Register = () => {
                                                         d="M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z"
                                                         clipRule="evenodd" />
                                                 </svg>
-                                                <input {...register('password', { required: 'must be password' })} className="pl-2 outline-none border-none" type="password" name="password" id="" placeholder="Password" /> <br />
+                                                <input {...register('password', { required: 'Must be password' })} className="pl-2 w-full outline-none rounded-lg p-2  border-none focus:bg-white " type={passwordShow ? "text" : 'password'} name="password" id="" placeholder="Password" /> <br />
+                                                <button onClick={(e) => {
+                                                    e.preventDefault()
+                                                    setPasswordShow(!passwordShow)
+                                                }}>
+
+                                                    {
+                                                        passwordShow ? <AiFillEyeInvisible className='text-2xl'></AiFillEyeInvisible> : <AiFillEye className='text-2xl'></AiFillEye>
+                                                    }
+                                                </button>
                                             </div>
-                                            {errors.password && <span>{errors.password.message}</span>}
+                                            {errors.password && <span className='text-red-400'>{errors.password.message}</span>}
                                             <div className='flex justify-between'>
                                                 <div className='flex items-center' >
                                                     <h1 className='text-xl font-bold '>Account Type: </h1>
@@ -239,7 +247,7 @@ const Register = () => {
                                                 </div>
                                             </div>
 
-                                            <button type="submit" className="block w-full bg-indigo-600 mt-4 py-2 rounded-2xl text-white font-semibold mb-2">Login in</button>
+                                            <button type="submit" className="block w-full bg-indigo-600 mt-4 py-2 rounded-2xl text-white font-semibold mb-2">Sing up</button>
                                         </form>
                                         {errors.image && <span>This field is required {errors?.image?.message}</span>}
 
@@ -247,7 +255,7 @@ const Register = () => {
                                             <Link onClick={handleGoogle}><FcGoogle className='text-4xl'></FcGoogle></Link>
                                             <Link ><FaGithubSquare className='text-4xl'></FaGithubSquare></Link>
                                         </div>
-                                        <Link to='/register' className='underline decoration-cyan-700 text-base  flex justify-center'>Create a new account </Link>
+                                        <Link to='/login' className='underline decoration-cyan-700 text-base  flex justify-center'>Already have an account log in </Link>
                                     </div>
                                 </div>
 

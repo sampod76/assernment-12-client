@@ -1,12 +1,12 @@
 import React, { useContext } from 'react';
 import { FcShop, IconName } from "react-icons/fc";
-import { Link, useNavigate } from 'react-router-dom';
+import { json, Link, useNavigate } from 'react-router-dom';
 import { AuthContex } from '../../Context/Context';
 import { AiOutlineArrowRight } from "react-icons/ai";
 import { AiOutlineShoppingCart } from "react-icons/ai";
 
 const Header = () => {
-    const { user, logOut } = useContext(AuthContex)
+    const { user, logOut, whiteList, setWhitelist } = useContext(AuthContex)
     const navigate = useNavigate()
 
     const headerList = <>
@@ -15,7 +15,10 @@ const Header = () => {
         <li><Link to='/deshboard'>Deshboard</Link></li>
         <li><Link to='/blog'>Blog</Link></li>
         {
-            user?.uid ? <li><Link onClick={() => logOut().then(()=>navigate('/login') )} >Log Out</Link></li> : <>
+            user?.uid ? <li><Link onClick={() => logOut().then(() => {
+                setWhitelist(0)
+                navigate('/login')
+            })} >Log Out</Link></li> : <>
                 <li><Link to='/login'>Sing In</Link></li>
                 <li><Link to='/register'>Register</Link></li>
 
@@ -24,6 +27,7 @@ const Header = () => {
 
 
     </>
+    const whiteListLocalStorage = JSON.parse(localStorage.getItem('whitelist'))
     return (
         <div className='container mx-auto'>
             <div className="navbar text-white">
@@ -38,7 +42,7 @@ const Header = () => {
                             }
                         </ul>
                     </div>
-                    <Link to='/' className="btn btn-ghost normal-case font-bold text-3xl"><span><FcShop className='text-5xl'></FcShop></span> TrustShop</Link>
+                    <Link to='/' className="btn btn-ghost normal-case font-bold text-xl md:text-3xl"><span><FcShop className='text-3xl md:text-5xl'></FcShop></span> TrustShop</Link>
                 </div>
                 <div className="navbar-end hidden lg:flex">
                     <ul className="menu menu-horizontal p-0">
@@ -47,13 +51,22 @@ const Header = () => {
                         }
                     </ul>
                 </div>
-               
-
 
                 <div className="dropdown dropdown-bottom dropdown-end text-black">
-                    <label tabIndex={1} className=""><AiOutlineShoppingCart className='text-3xl text-indigo-700'></AiOutlineShoppingCart></label>
+                    <label tabIndex={1} className="relative">
+                        <AiOutlineShoppingCart className='text-5xl text-indigo-700'></AiOutlineShoppingCart>
+                        {
+                            (whiteList || whiteListLocalStorage?.whitelistNumber) > 0 &&
+                            <h1 className='absolute -top-1 -right-2 text-xl w-6 text-center font-bold rounded-full bg-red-400'>{(whiteList || whiteListLocalStorage?.whitelistNumber)}</h1>
+                        }
+                    </label>
                     <ul tabIndex={1} className="dropdown-content menu p-2 shadow rounded-box w-52">
-                        <li><Link className='bg-sky-800 text-white mt-2 rounded-lg' to='/user/whiteList'>WhiteList</Link></li>
+                        <li><Link className='bg-sky-800 text-white mt-2 rounded-lg relative' to='/user/whiteList'>WhiteList</Link>
+                            {
+                                (whiteList || whiteListLocalStorage?.whitelistNumber) > 0 &&
+                                <h1 className='absolute -top-1 -right-2 text-xl w-6 text-center font-bold rounded-full bg-red-400'>{(whiteList || whiteListLocalStorage?.whitelistNumber)}</h1>
+                            }
+                        </li>
                         <li><Link className='bg-sky-800 text-white mt-2 rounded-lg' to='/user/booking'>All Booking</Link></li>
 
                     </ul>
@@ -64,7 +77,7 @@ const Header = () => {
                     </span>
                 </label>
             </div>
-            
+
         </div>
     );
 };

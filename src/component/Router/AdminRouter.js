@@ -48,7 +48,7 @@ const AdminPrivetRoute = ({ children }) => {
     }
 
   
-    if (adminData.role =='admin') {
+    if (user?.uid && adminData.role =='admin') {
         return children
     }
 

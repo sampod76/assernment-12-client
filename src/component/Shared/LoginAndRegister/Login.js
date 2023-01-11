@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import { FcGoogle, } from "react-icons/fc";
 import { FaGithubSquare } from "react-icons/fa";
 import { Link, useLocation, useNavigate } from 'react-router-dom';
@@ -7,10 +7,11 @@ import { ThreeCircles } from 'react-loader-spinner';
 import toast from 'react-hot-toast';
 import { useForm } from 'react-hook-form';
 import { jwtTokenCreate, PostUser } from '../../Auth/useAuth';
+import { AiFillEye, AiFillEyeInvisible } from 'react-icons/ai';
 
 
 const Login = () => {
-
+    const [passwordShow, setPasswordShow] = useState(false)
     const { user, googleLogin, loading, setLoading, loginInEmailPassword, userDatabase } = useContext(AuthContex)
     const { register, handleSubmit, watch, formState: { errors }, reset } = useForm()
     const navigate = useNavigate()
@@ -31,10 +32,10 @@ const Login = () => {
                     role: 'user'
                 }
                 // console.log(userInfo);
- // এটি খুব গুরুত্বপূর্ণ এইখানে যখন একজন ইউজার প্রথমবার লগইন করবে তখনই তাকে আমরা ক্রিয়েট করে ফেলব | তারপর আবার আরেকটা aip  মাধ্যমে ডাটাবেজ থেকে ইউজারটি কেনে কন্টাক্ট এ ফ্রিতে রাখবো তার পরে এইখানে এইখানে এই কন্ডিশন দেবো । না হলে সে বারবার আমার ডাটাবেজের উজার  ক্রিয়েট করতে থাকবে
+                // এটি খুব গুরুত্বপূর্ণ এইখানে যখন একজন ইউজার প্রথমবার লগইন করবে তখনই তাকে আমরা ক্রিয়েট করে ফেলব | তারপর আবার আরেকটা aip  মাধ্যমে ডাটাবেজ থেকে ইউজারটি কেনে কন্টাক্ট এ ফ্রিতে রাখবো তার পরে এইখানে এইখানে এই কন্ডিশন দেবো । না হলে সে বারবার আমার ডাটাবেজের উজার  ক্রিয়েট করতে থাকবে
                 if (userDatabase?.email === result.user.email) {
                     console.log('instde')
-                    return  navigate(from, { replace: true })
+                    return navigate(from, { replace: true })
                 }
 
                 PostUser(userInfo)
@@ -137,8 +138,6 @@ const Login = () => {
 
                                     <form onSubmit={handleSubmit(onSubmit)} className="bg-white">
 
-
-
                                         <div className="flex items-center border-2 py-2 px-3 rounded-2xl mb-4">
                                             <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-gray-400" fill="none"
                                                 viewBox="0 0 24 24" stroke="currentColor">
@@ -147,7 +146,7 @@ const Login = () => {
                                             </svg>
                                             <input className="pl-2 outline-none border-none" {...register('email', { required: true })} type="email" name="email" id="" placeholder="Email Address" /><br />
                                         </div>
-                                        {errors.email && <span>This field is required {errors.message}</span>}
+                                        {errors.email && <span className='text-red-400'>This field is required {errors.message}</span>}
                                         <div className="flex items-center border-2 py-2 px-3 rounded-2xl">
                                             <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-gray-400" viewBox="0 0 20 20"
                                                 fill="currentColor">
@@ -155,9 +154,18 @@ const Login = () => {
                                                     d="M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z"
                                                     clipRule="evenodd" />
                                             </svg>
-                                            <input {...register('password', { required: 'must be password' })} className="pl-2 outline-none border-none" type="password" name="password" id="" placeholder="Password" /> <br />
+                                            <input {...register('password', { required: 'must be password' })} className="pl-2 outline-none border-none" type={passwordShow ? "text" : 'password'} name="password" id="" placeholder="Password" />
+                                            <button onClick={(e) => {
+                                                e.preventDefault()
+                                                setPasswordShow(!passwordShow)
+                                            }}>
+
+                                                {
+                                                    passwordShow ? <AiFillEyeInvisible className='text-2xl'></AiFillEyeInvisible> : <AiFillEye className='text-2xl'></AiFillEye>
+                                                }
+                                            </button>
                                         </div>
-                                        {errors.password && <span>{errors.password.message}</span>}
+                                        {errors.password && <span className='text-red-400'>{errors.password.message}</span>}
 
                                         <button type="submit" className="block w-full bg-indigo-600 mt-4 py-2 rounded-2xl text-white font-semibold mb-2">Login in</button>
                                     </form>

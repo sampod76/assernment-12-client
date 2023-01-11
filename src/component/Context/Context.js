@@ -12,8 +12,8 @@ const Context = ({ children }) => {
     const [databaseLoader, setDatabaseLoader] = useState(false)
     const [user, setUser] = useState(null)
     const [loading, setLoading] = useState(true);
+    const [whiteList,setWhitelist]=useState(0)
     const [userDatabase, setUserDatabase] = useState({})
-
     const googleProvider = new GoogleAuthProvider();
     const gitProvider = new GithubAuthProvider();
 
@@ -48,6 +48,7 @@ const Context = ({ children }) => {
     }
     
 
+
     
       // ----------------get user from database------------
 
@@ -78,9 +79,6 @@ const Context = ({ children }) => {
 
     // console.log(userDatabase);
 
-    
-
-
 
 
     useEffect(() => {
@@ -92,6 +90,10 @@ const Context = ({ children }) => {
             unsuscribe()
         }
     }, [])
+
+    if(!user?.email){
+        localStorage.removeItem('whitelist')
+    }
 
     if (databaseLoader) {
         return <div className='flex justify-center items-center min-h-screen'>
@@ -111,7 +113,7 @@ const Context = ({ children }) => {
     }
 
 console.log(user)
-    const authInfo = { logOut, loginInEmailPassword, singUpEmainPassword, googleLogin, loading, setLoading, user, updateInfo, userDatabase ,databaseLoader,setUserDatabase}
+    const authInfo = { logOut, loginInEmailPassword, singUpEmainPassword, googleLogin, loading, setLoading, user, updateInfo, userDatabase ,databaseLoader,setUserDatabase,whiteList,setWhitelist}
     return (
         <AuthContex.Provider value={authInfo}>
             {children}

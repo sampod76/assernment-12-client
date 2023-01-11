@@ -1,9 +1,11 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import toast from 'react-hot-toast';
 import { BookingMobile, whiteListDeletd } from '../Auth/useAuth';
+import { AuthContex } from '../Context/Context';
 
-const WhitlistCard = ({ data ,refetch}) => {
+const WhitlistCard = ({ data, refetch }) => {
+    const { setWhitelist, user } = useContext(AuthContex)
     const [modelUse, setHandleClose] = useState(true)
 
     const { register, handleSubmit, watch, formState: { errors }, reset } = useForm()
@@ -12,15 +14,12 @@ const WhitlistCard = ({ data ,refetch}) => {
 
 
 
-
-
-
     const onSubmit = modaldata => {
         console.log(data)
 
         const orderMobileData = {
             ...modaldata, mobileId, name, model, stock, img, useremail: useremail, paid: false,
-            bookedConfirm: true,price
+            bookedConfirm: true, price
         }
         BookingMobile(orderMobileData)
             .then(res => res.json())
@@ -52,16 +51,29 @@ const WhitlistCard = ({ data ,refetch}) => {
 
     const handleBookingDelele = () => {
         whiteListDeletd(_id)
-        .then(res => res.json())
-        .then(data => {
-            console.log(data);
-            if (data.success) {
-                toast.success(data.message)
-                refetch()
-            } else {
-                toast.error(data.message)
-            }
-        }).catch(err => toast.error(err.message))
+            .then(res => res.json())
+            .then(data => {
+                console.log(data);
+                if (data.success) {
+                    toast.success(data.message)
+                    refetch()
+
+                    // --------whiteList data number--start-----
+                    const whiteListLocalStorage = JSON.parse(localStorage.getItem('whitelist'))
+                    if (localStorage.getItem('whitelist') && whiteListLocalStorage.userEamil === user?.email) {
+                        const value = { userEamil: user?.email, whitelistNumber: whiteListLocalStorage.whitelistNumber - 1 }
+                        localStorage.setItem('whitelist', JSON.stringify(value))
+
+                        setWhitelist(whiteListLocalStorage.whitelistNumber - 1)
+                    } else {
+                        localStorage.removeItem('whitelist')
+                        setWhitelist(0)
+                    }
+
+                } else {
+                    toast.error(data.message)
+                }
+            }).catch(err => toast.error(err.message))
 
     }
 
@@ -87,10 +99,10 @@ const WhitlistCard = ({ data ,refetch}) => {
 
                             </div>
 
-                           <div>
-                           <button onClick={handleBookingDelele}  className="md:btn md:btn-primary md:text-lg font-bold bg-blue-600 p-1 rounded  text-white text-center mr-2 ">Delete</button>
-                            <label  htmlFor="singleWhitlistModal" className="md:btn md:btn-primary text-lg font-bold bg-blue-600 p-1 rounded md:w-[30%] text-white text-center cursor-pointer mt-1">Booking</label>
-                           </div>
+                            <div>
+                                <button onClick={handleBookingDelele} className="md:btn md:btn-primary md:text-lg font-bold bg-blue-600 p-1 rounded  text-white text-center mr-2 ">Delete</button>
+                                <label htmlFor="singleWhitlistModal" className="md:btn md:btn-primary text-lg font-bold bg-blue-600 p-1 rounded md:w-[30%] text-white text-center cursor-pointer mt-1">Booking</label>
+                            </div>
                         </div>
 
                     </div>

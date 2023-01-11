@@ -11,7 +11,7 @@ const AddProducts = () => {
     const onSubmit = data => {
         const { sellarname, sellarNumber, sellarEmail, sellarLoaction, useYears, name, OfficalPrice, sellarPrice, accessories, description, img } = data
         const sellarInfo = { sellarname, sellarNumber, sellarEmail, sellarLoaction, sellarPrice, }
-        // console.log(data)
+        console.log(data)
         // uploadeImg(image)
         //     .then(result => {
         //         if (result.success && result.status) {
@@ -35,15 +35,15 @@ const AddProducts = () => {
         // .catch(err => toast.error(err.message))
 
     }
-    console.log(userDatabase)
+
 
     return (
         <div className='my-3 '>
 
             {
                 userDatabase?.verify ?
-                    <section className="p-6 dark:bg-gray-800 dark:text-gray-50 bg-slate-300 ">
-                        <form onSubmit={handleSubmit(onSubmit)} className="container flex flex-col mx-auto space-y-12 ng-untouched ng-pristine ng-valid">
+                    <section className="rounded-lg p-6 dark:bg-gray-800 dark:text-gray-50 bg-slate-300 font-semibold">
+                        <form onSubmit={handleSubmit(onSubmit)} className="container flex flex-col mx-auto space-y-12 ng-untouched ng-pristine ng-valid ">
 
 
                             <div className="grid grid-cols-6 gap-4 col-span-full lg:col-span-3">
@@ -70,7 +70,15 @@ const AddProducts = () => {
 
                                 <div className="col-span-full sm:col-span-2">
                                     <label htmlFor="name" className="text-sm">Bandname / Catagoris</label>
-                                    <input {...register('name', { required: true })} id="name" type="text" placeholder="Bandname" className="w-full p-3 rounded-md focus:ring focus:ring-opacity-75 focus:ring-violet-400 dark:border-gray-700 dark:text-gray-900" />
+                                    <select {...register('name', { required: true })} className="select  w-full  text-black">
+                                        <option selected={true}>Other</option>
+                                        <option>Samsung</option>
+                                        <option>Vivo</option>
+                                        <option>Oppo</option>
+                                        <option>Iphone</option>
+
+                                    </select>
+                                    {/* <input {...register('name', { required: true })} id="name" type="text" placeholder="Bandname" className="w-full p-3 rounded-md focus:ring focus:ring-opacity-75 focus:ring-violet-400 dark:border-gray-700 dark:text-gray-900" /> */}
                                 </div>
 
                                 <div className="col-span-full sm:col-span-2">
@@ -96,7 +104,7 @@ const AddProducts = () => {
 
                                 <div className="col-span-full">
                                     <label htmlFor="description" className="text-sm">Description</label>
-                                    <input {...register('description')} id="description" type="text" placeholder="" className="w-full p-3 rounded-md focus:ring focus:ring-opacity-75 focus:ring-violet-400 dark:border-gray-700 dark:text-gray-900" />
+                                    <input {...register('description')} id="description" type="text" placeholder="Please write mobile details" className="w-full p-3 rounded-md focus:ring focus:ring-opacity-75 focus:ring-violet-400 dark:border-gray-700 dark:text-gray-900" />
                                 </div>
 
                                 <div className="col-span-full sm:col-span-2">
@@ -112,7 +120,7 @@ const AddProducts = () => {
 
 
                             </div>
-                            <button type="submit" className='btn btn-primary w-fit mx-auto text-black hover:text-white'>Add</button>
+                            <button type="submit" className='btn btn-primary  mx-auto text-black hover:text-white w-[60%] font-bold'>Add Product</button>
 
 
                             {errors.name && <span className='text-red-400 font-bold'>name field is required {errors.message}</span>}
@@ -123,8 +131,6 @@ const AddProducts = () => {
                             {errors.useYears && <span className='text-red-400 font-bold'>useYears field is required {errors.message}</span>}
                             {errors.sellarLoaction && <span className='text-red-400 font-bold'>sellarLoaction field is required {errors.message}</span>}
                             {errors.sellarEmail && <span className='text-red-400 font-bold'>sellarEmail field is required {errors.message}</span>}
-
-
 
                         </form>
                     </section> : <div>

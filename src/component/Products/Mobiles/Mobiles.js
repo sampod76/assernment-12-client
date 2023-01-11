@@ -6,11 +6,13 @@ import { useForm } from 'react-hook-form';
 import { AuthContex } from '../../Context/Context';
 import { BookingMobile, WhiteList } from '../../Auth/useAuth';
 import toast from 'react-hot-toast';
+import { useQuery } from 'react-query';
 
 
 const Mobiles = ({ mobile }) => {
     const [modelUse, setHandleClose] = useState(true)
-    const { user, userDatabase } = useContext(AuthContex)
+
+    const { user, userDatabase, whiteList, setWhitelist } = useContext(AuthContex)
     const { _id, name, model, sellarInfo, OfficalPrice, stock, reating, img, useYears } = mobile
 
     const { register, handleSubmit, watch, formState: { errors }, reset } = useForm()
@@ -59,12 +61,26 @@ const Mobiles = ({ mobile }) => {
             .then(result => {
                 if (result.success) {
                     toast.success(result.message)
+
+                    // --------whiteList data number--start-----
+                    const whiteListLocalStorage = JSON.parse(localStorage.getItem('whitelist'))
+                    if (localStorage.getItem('whitelist') && whiteListLocalStorage.userEamil === user?.email) {
+                        const value = { userEamil: user?.email, whitelistNumber: whiteListLocalStorage.whitelistNumber + 1 }
+                        localStorage.setItem('whitelist', JSON.stringify(value))
+
+                        setWhitelist(whiteListLocalStorage.whitelistNumber + 1)
+                    } else {
+                        localStorage.setItem('whitelist', JSON.stringify({ userEamil: user?.email, whitelistNumber: 1 }))
+                        setWhitelist(1)
+                    }
                 }
                 else {
                     toast.error(result.message)
                 }
             }).catch(errors => toast.error(errors.message))
     }
+
+
 
 
     return (
@@ -101,12 +117,12 @@ const Mobiles = ({ mobile }) => {
                             <button onClick={handleWhitestList} className="md:btn md:btn-primary text-lg font-bold bg-blue-600 p-1 rounded   text-white text-center ">whitlist-{'>'}</button>
 
 
-                            {stock === true ? 
+                            {stock === true ?
 
-                                <label htmlFor="my-modal" className="md:btn md:btn-primary text-lg font-bold bg-blue-600 p-1 rounded  text-white text-center">Booking</label>:
-                                <button  disabled className="text-lg font-bold bg-gray-700 p-1 rounded  text-white text-center">Soldout</button>
+                                <label htmlFor="my-modal" className="md:btn md:btn-primary text-lg font-bold bg-blue-600 p-1 rounded  text-white text-center">Booking</label> :
+                                <button disabled className="text-lg font-bold bg-gray-700 p-1 rounded  text-white text-center">Soldout</button>
 
-                           }
+                            }
 
 
                         </div>

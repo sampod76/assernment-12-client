@@ -23,25 +23,43 @@ const AllSellar = () => {
             })
     }
 
-    const handleVeryfiy = (id) => {
+    const handleVeryfiy = (id, condition) => {
         console.log(id);
-      
-        verifySellarHook(`https://assernment-12-serverside.vercel.app/updateuser/${id}`)
-            .then(result => {
-                if (result.success) {
-                    toast.success(result.message)
-                    refetch()
-                }
-                else {
-                    toast.error(result.message)
-                }
-            })
-            .catch(err => {
-                toast.error(err.message)
-                console.log(err);
-            })
+        if (condition) {
+            verifySellarHook(`https://assernment-12-serverside.vercel.app/updateuser/${id}`,condition)
+                .then(result => {
+                    if (result.success) {
+                        toast.success(result.message)
+                        refetch()
+                    }
+                    else {
+                        toast.error(result.message)
+                    }
+                })
+                .catch(err => {
+                    toast.error(err.message)
+                    console.log(err);
+                })
+        } else {
+            verifySellarHook(`https://assernment-12-serverside.vercel.app/updateuser/${id}`,condition)
+                .then(result => {
+                    if (result.success) {
+                        toast.success(result.message)
+                        refetch()
+                    }
+                    else {
+                        toast.error(result.message)
+                    }
+                })
+                .catch(err => {
+                    toast.error(err.message)
+                    console.log(err);
+                })
+        }
+
     }
 
+  
 
     if (isLoading) {
         return <div className='flex justify-center items-center'>
@@ -85,13 +103,11 @@ const AllSellar = () => {
                                     <td>{<button onClick={() => handleDeleteSellar(user._id)} className='btn btn-outline btn-error'>Delete</button>} </td>
                                     <td>
 
-                                        {!user.verify ? <button onClick={() => handleVeryfiy(user._id)} className='btn btn-accent'>Accept verify</button> : <button className='  btn btn-error  '> Cancle verify</button>}
+                                        {!user.verify ? <button onClick={() => handleVeryfiy(user._id,true)} className='btn btn-accent'>Accept verify</button> : <button className=' btn btn-error 
+                                        ' onClick={() => handleVeryfiy(user._id,false)}> Cancle verify</button>}
                                     </td>
                                 </tr>)
                             }
-
-
-
 
                         </tbody>
                     </table>
