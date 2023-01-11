@@ -123,6 +123,7 @@ const Login = () => {
     return (
         <div className=''>
 
+            <h1 className='text-xl text-center font-bold border-4 rounded-lg p-3 '>Damo Account: | <span className='text-blue-500 underline'>sellar account:</span> sellar@gmail.com | <span className='text-blue-500 underline'>user Accounting :</span> user@gmail.com | <span className='text-blue-500'>All account Password:</span>112233</h1>
             <div className="  py-6 flex flex-col justify-center sm:py-12">
                 <div className="relative py-3 sm:max-w-xl sm:mx-auto">
                     <div
